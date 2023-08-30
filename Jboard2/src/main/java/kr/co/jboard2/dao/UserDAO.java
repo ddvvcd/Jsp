@@ -174,6 +174,29 @@ public class UserDAO extends DBHelper{
 		return result;
 	}
 	
+	public int selectCountUidAndEmail(String uid, String email) {
+		
+		int result = 0;
+		
+		try {
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_UID_EMAIL);
+			psmt.setString(1, uid);
+			psmt.setString(2, email);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			logger.error("selectCountUidAndEmail error : " + e.getMessage());
+		}
+		
+		return result;
+	}
 	
 	public UserDTO selectUser(String uid, String pass) {
 		
@@ -181,6 +204,7 @@ public class UserDAO extends DBHelper{
 							//로그인 처리니까 아이디, 비번이 없을 경우 (select 조회가 없을 경우)
 							//null로 리턴하기 위해서 분리해둠
 		try {
+			logger.info("UserDAO selectUser...1");
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.SELECT_USER);
 			psmt.setString(1, uid);
@@ -205,7 +229,7 @@ public class UserDAO extends DBHelper{
 			}
 			
 			close();
-			
+			logger.info("UserDAO selectUser...2");
 		} catch (Exception e) {
 			logger.error("selectUser error : " + e.getMessage());
 		}
@@ -213,12 +237,14 @@ public class UserDAO extends DBHelper{
 		return dto;
 	}
 	
+	//아이디찾기 이메일 인증
 	public UserDTO selectUserByNameAndEmail(String name, String email) {
 		
 		UserDTO dto = null; //객체 선언 및 분리해서 초기화 하는 이유
 							//로그인 처리니까 아이디, 비번이 없을 경우 (select 조회가 없을 경우)
 							//null로 리턴하기 위해서 분리해둠
 		try {
+			logger.info("UserDAO selectUserByNameAndEmail...1");
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.SELECT_USER_BY_NAME_AND_EMAIL);
 			psmt.setString(1, name);
@@ -255,10 +281,66 @@ public class UserDAO extends DBHelper{
 		return null;
 	}
 	
+	//회원정보 수정
 	public void updateUser(UserDTO dto) {
-		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_USER);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getNick());
+			psmt.setString(3, dto.getEmail());
+			psmt.setString(4, dto.getHp());
+			psmt.setString(5, dto.getZip());
+			psmt.setString(6, dto.getAddr1());
+			psmt.setString(7, dto.getAddr2());
+			psmt.setString(8, dto.getUid());
+			psmt.executeUpdate();
+			close();
+			
+		} catch (Exception e) {
+			logger.error("updateUser error : " + e.getMessage());
+		}
 	}
-	public void deleteUser(String uid) {
+	
+	//비밀번호 수정
+	public int updateUserPass(String uid, String pass) {
 		
+		int result = 0;
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_USER_PASS);
+			psmt.setString(1, pass);
+			psmt.setString(2, uid);
+			result = psmt.executeUpdate();
+			close();
+			
+		} catch (Exception e) {
+			logger.error("updateUserPass error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	//회원탈퇴 기능
+	public int updateUserForWithdraw(String uid) {
+		
+		int result = 0;
+	
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_USER_FOR_WITHDRAW);
+			psmt.setString(1, uid);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error("updateUserForWithdraw error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	public void deleteUser(String uid) {
+	
 	}
 }

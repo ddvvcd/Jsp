@@ -1,13 +1,115 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Jboard2/js/zipCode.js"></script>
+<script src="/Jboard2/js/validation.js"></script>
+<script src="/Jboard2/js/checkUser.js"></script>
+<script src="/Jboard2/js/authEmail.js"></script> <!-- register.jsp에서 다 가져옴 -->
+<script>
+
+	$(document).ready(function(){
+
+		const inputUid = document.getElementsByName('uid')[0];
+		const inputPass = document.getElementsByName('pass2')[0]; //pass2 문서객체 생성
+		
+		//비밀번호 변경 (문서객체부터 생성)
+		const btnUpdatePass = document.getElementById('btnUpdatePass');
+		btnUpdatePass.addEventListener('click', function(){
+			
+			if(isPassOk && confirm('정말 비밀번호를 수정하시겠습니까?')){
+				
+				//폼데이터 객체 전송 안 됨...나중에 연구를 해보자
+				const formData = new FormData();
+				formData.append('kind', 'PASSWORD');
+				formData.append('uid', inputUid.value);
+				formData.append('pass', inputPass.value); //위에 생성한 문서객체 
+				
+				//동작되는지 확인!
+				//alert('click!');
+				
+				//fetch 함수에서 post 데이터 전송을 위해 URLSearchParams 사용
+				const params = new URLSearchParams();
+				params.append('kind', 'PASSWORD');
+				params.append('uid', inputUid.value);
+				params.append('pass', inputPass.value); //위에 생성한 문서객체 
+
+				
+				//fetch('') 여기는 경로 작성한다고 함, 일렬로 작성하고 세로쓰기로 바꾸기
+				fetch('/Jboard2/user/myInfo.do', {
+						method: 'POST',
+						body: params
+				})
+					.then((response)=>response.json())
+					.then((data)=>{
+						console.log('data : ' + data);						
+						
+						if(data.result > 0)
+							alert('비밀번호가 수정되었습니다. 다시 로그인하여 주시기 바랍니다.');
+							location.href = '/Jboard2/user/logout.do'
+					});
+			}else{
+				alert('변경 비밀번호가 유효하지 않거나 일치하지 않습니다.');
+			}
+				
+		});
+		
+		//탈퇴하기 (문서객체부터 생성)
+		const btnWithdraw = document.getElementById('btnWithdraw');
+		btnWithdraw.addEventListener('click', function(){
+			
+			if(confirm('정말 탈퇴 하시겠습니까?')){
+				
+			
+				//jsonData 생성 (탈퇴하기니까 아이디만 있으면 됨)
+				const jsonData = {
+					"kind": "WITHDRAW",
+					"uid": inputUid.value
+			};
+			
+				//ajax 함수로 처리
+				$.ajax({
+					url: '/Jboard2/user/myInfo.do',
+					type: 'POST',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){ //MyInfoController에서 값을 넘겨받음
+						console.log('data : ' + data);
+						
+						if(data.result > 0){
+							alert('회원 탈퇴처리가 완료되었습니다. 이용해 주셔서 감사합니다.');
+							location.href = '/Jboard2/user/logout.do';
+						}
+					}
+				});
+			
+				/* 안 되서 주석처리하라고 하셨음
+				console.log('jsonData : ' + jsonData);
+				
+				fetch('/Jboard2/user/myInfo.do', {
+						method: 'POST',
+						body: JSON.stringify(jsonData)
+					})
+					.then((response)=>response.json())
+					.then((data)=>{
+						console.log('data : ' + data); //콘솔 찍어서 확인
+					});
+				*/
+				
+			}//if문
+		}); //btnWithdraw.addEventListener
+	}); //window.onload
+</script>
 <main id="user">
     <section class="myInfo">
-        <form action="#" method="post">
+        <form action="/Jboard2/user/myInfo.do" method="post">
+        	<input type="hidden" name="kind" value="MODIFY">
+        	<input type="hidden" name="type" value="MODIFY">
+        	<input type="hidden" name="uid" value="${sessUser.uid}">
             <table border="1">
                 <caption>회원정보 설정</caption>
                 <tr>
                     <td>아이디</td>
-                    <td>abc</td>
+                    <td>${sessionScope.sessUser.uid}</td>
                 </tr>
                 <tr>
                     <td>비밀번호</td>
@@ -20,12 +122,12 @@
                     <td>비밀번호 확인</td>
                     <td>
                         <input type="password" name="pass2" placeholder="비밀번호 입력 확인"/>
-                        <button type="button" class="btnUpdatePass">비밀번호 수정</button>
+                        <button type="button" id="btnUpdatePass" class="btnUpdatePass">비밀번호 수정</button>
                     </td>
                 </tr>
                 <tr>
                     <td>회원가입날짜</td>
-                    <td>2022-01-01 12:45:12</td>
+                    <td>${sessUser.regDate}</td>
                 </tr>
             </table>
 
@@ -34,7 +136,7 @@
                 <tr>
                     <td>이름</td>
                     <td>
-                        <input type="text" name="name" value=""/>
+                        <input type="text" name="name" value="${sessUser.name}"/>
                         <span class="nameResult"></span>                     
                     </td>
                 </tr>
@@ -42,8 +144,8 @@
                     <td>별명</td>
                     <td>
                         <p class="nickInfo">공백없는 한글, 영문, 숫자 입력</p>
-                        <input type="text" name="nick" placeholder="별명 입력"/>
-                        <button type="button" id="btnNickCheck"><img src="../img/chk_id.gif" alt="중복확인"/></button>
+                        <input type="text" name="nick" value="${sessUser.nick}" placeholder="별명 입력"/>
+                        <button type="button" id="btnCheckNick"><img src="../img/chk_id.gif" alt="중복확인"/></button>
                         <span class="nickResult"></span>
                     </td>
                 </tr>
@@ -51,35 +153,35 @@
                     <td>이메일</td>
                     <td>
                         
-                        <input type="email" name="email" placeholder="이메일 입력"/>
-                        <span class="emailResult"></span>
-                        <button type="button" id="btnEmailAuth"><img src="../img/chk_auth.gif" alt="인증번호 받기"/></button>
+                        <input type="email" name="email" value="${sessUser.email}" placeholder="이메일 입력"/>
+                        <span class="resultEmail"></span>
+                        <button type="button" id="btnEmailCode"><img src="../img/chk_auth.gif" alt="인증번호 받기"/></button>
                         <div class="auth">
                             <input type="text" name="auth" placeholder="인증번호 입력"/>
-                            <button type="button" id="btnEmailConfirm"><img src="../img/chk_confirm.gif" alt="확인"/></button>
+                            <button type="button" id="btnEmailAuth"><img src="../img/chk_confirm.gif" alt="확인"/></button>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>
                     <td>
-                        <input type="text" name="hp" placeholder="휴대폰 입력"/>
-                        <span class="hpResult"></span>
+                        <input type="text" name="hp" value="${sessUser.hp}" placeholder="휴대폰 입력"/>
+                        <span class="resultHp"></span>
                     </td>
                 </tr>
                 <tr>
                     <td>주소</td>
                     <td>
-                        <input type="text" name="zip" id="zip" readonly="readonly" placeholder="우편번호"/>
-                        <button type="button"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
-                        <input type="text" name="addr1" id="addr1" placeholder="주소 검색"/>
-                        <input type="text" name="addr2" id="addr2" placeholder="상세주소 입력"/>
+                        <input type="text" name="zip" id="zip" value="${sessUser.zip}" readonly="readonly" placeholder="우편번호"/>
+                        <button type="button" onclick="zipcode()"><img src="../img/chk_post.gif" alt="우편번호찾기"/></button>
+                        <input type="text" name="addr1" id="addr1" value="${sessUser.addr1}" placeholder="주소 검색"/>
+                        <input type="text" name="addr2" id="addr2" value="${sessUser.addr2}" placeholder="상세주소 입력"/>
                     </td>
                 </tr>
                 <tr>
                     <td>회원탈퇴</td>
                     <td>
-                        <button type="button" class="btnWithdraw">탈퇴하기</button>
+                        <button type="button" id="btnWithdraw" class="btnWithdraw">탈퇴하기</button>
                     </td>
                 </tr>
             </table>
