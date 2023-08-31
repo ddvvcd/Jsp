@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.jboard2.dto.ArticleDTO;
 import kr.co.jboard2.service.ArticleService;
 
 @WebServlet("/comment.do")
@@ -21,17 +22,31 @@ public class CommentController extends HttpServlet{
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
-	public void init() throws ServletException {
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	}
-	
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String parent  = req.getParameter("parent");
+		String content = req.getParameter("content");
+		String writer  = req.getParameter("writer");
+		String regip   = req.getParameter("regip");
+		
+		logger.debug("parent : " + parent);
+		logger.debug("content : " + content);
+		logger.debug("writer : " + writer);
+		logger.debug("regip : " + regip);
+		
+		ArticleDTO dto = new ArticleDTO();
+		dto.setParent(parent);
+		dto.setContent(content);
+		dto.setWriter(writer);
+		dto.setRegip(regip);
+		
+		//댓글 입력
+		service.insertComment(dto);
+		
+		//댓글 카운트 수정 plus
+		service.updateArticleForCommentPlus(regip);
+		
+		//리다이렉트
+		resp.sendRedirect("/Jboard2/view.do?no=\"+parent");
 	}
-	
-	
 }

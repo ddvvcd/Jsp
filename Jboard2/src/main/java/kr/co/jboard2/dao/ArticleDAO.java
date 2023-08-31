@@ -127,10 +127,63 @@ public class ArticleDAO extends DBHelper {
 	
 	public void updateArticle(ArticleDTO dto) {
 		
+		try {
+			logger.info("ArticleDAO updateArticle...1");
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setInt(3, dto.getNo());
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO updateArticle...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAO updateArticle error : " + e.getMessage());
+		}
 	}
 	
-	public void deleteArticle(int no) {
+	public void deleteArticle(String no) {
 		
+		try {
+			
+			logger.info("ArticleDAO deleteArticle...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO deleteArticle...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAO deleteArticle error : " + e.getMessage());
+		}
+	}
+	
+	//여기서 부턴 추가
+	
+	public int selectCountTotal() {
+		
+		int total = 0;
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_TOTAL);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO selectCountTotal error : " + e.getMessage());
+		}
+		
+		return total;
 	}
 	
 	public List<ArticleDTO> selectComments(String parent) {
@@ -168,6 +221,92 @@ public class ArticleDAO extends DBHelper {
 		}
 		
 		return comments;
+	}
+	
+	public void insertComment(ArticleDTO dto) {
+		
+		try {
+			logger.info("ArticleDAO insertComment...1");
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
+			psmt.setInt(1, dto.getParent());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getWriter());
+			psmt.setString(4, dto.getRegip());
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO insertComment...2");
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO insertComment error : " + e.getMessage());
+		}
+	}
+	
+	public void updateArticleForCommentPlus(String no) {
+		
+		try {
+			logger.info("ArticleDAO updateArticleForCommentPlus...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE_FOR_COMMENT_PLUS);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO updateArticleForCommentPlus...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAo updateArticleForCommentPlus error : " + e.getMessage());
+		}
+	}
+	
+	public void updateArticleForCommentMinus(String no) {
+		
+		try {
+			logger.info("ArticleDAO updateArticleForCommentMinus...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE_FOR_COMMENT_MINUS);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO updateArticleForCommentMinus...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAo updateArticleForCommentMinus error : " + e.getMessage());
+		}
+	}
+	
+	public void updateComment(String no, String content) {
+		try {
+			logger.error("ArticleDAO updateComment...1");
+
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_COMMENT);
+			psmt.setString(1, no);
+			psmt.setString(2, content);
+			psmt.executeUpdate();
+			close();
+			
+			logger.error("ArticleDAO updateComment...2");
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO updateComment error : " + e.getMessage());
+		}
+	}
+	
+	public void deleteComment(String no) {
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -37,17 +37,41 @@ public enum ArticleService {
 		return dao.selectArticles(start);
 	}
 	
-	//추가
-	public List<ArticleDTO> selectComments(String parent) {
-		return dao.selectComments(parent);
-	}
-		
 	public void updateArticle(ArticleDTO dto) {
 		dao.updateArticle(dto);
 	}
 	
-	public void deleteArticle(int no) {
+	public void deleteArticle(String no) {
 		dao.deleteArticle(no);
+	}
+	
+	//여기서 부터 추가함 (댓글관련?)
+	public int selectCountTotal() {
+		return dao.selectCountTotal();
+	}
+	
+	public List<ArticleDTO> selectComments(String parent) {
+		return dao.selectComments(parent);
+	}
+	
+	public void insertComment(ArticleDTO dto) {
+		dao.insertComment(dto);
+	}	
+	
+	public void updateArticleForCommentPlus(String no) {
+		dao.updateArticleForCommentPlus(no);
+	}
+	
+	public void updateArticleForCommentMinus(String no) {
+		dao.updateArticleForCommentMinus(no);
+	}	
+	
+	public void updateComment(String no, String content) {
+		dao.updateComment(no, content);
+	}
+	
+	public void deleteComment(String no) {
+		dao.deleteComment(no);
 	}
 	
 	//업로드 경로 구하기

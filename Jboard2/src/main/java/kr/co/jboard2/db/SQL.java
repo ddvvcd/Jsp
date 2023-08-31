@@ -75,7 +75,10 @@ public class SQL {
 	//파일 전송 관련
 	public final static String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `Article`";
 
+	//게시판 글 목록
 	public final static String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no`=?";
+	
+	//게시판 글 쓰기
 	public final static String SELECT_ARTICLES = "SELECT "
 												+ "a.*, "
 												+ "b.`nick` "
@@ -84,8 +87,6 @@ public class SQL {
 												+ "WHERE `parent`=0 "
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
-	//게시판 글쓰기
-	public final static String SELECT_ARTICLES2 = "SELECT * FROM `Article`";
 			
 	public final static String SELECT_COMMENTS = "SELECT "
 												+ "a.*, "
@@ -97,14 +98,17 @@ public class SQL {
 	public final static String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` WHERE `parent`=0";
 	
 	//댓글 쓰기
-	
 	public final static String UPDATE_ARTICLE = "UPDATE `article` SET `title`=?, `content`=? WHERE `no`=?";
 	public final static String UPDATE_ARTICLE_FOR_COMMENT_PLUS = "UPDATE `article` SET `comment` = `comment` + 1 WHERE `no`=?";
 	public final static String UPDATE_ARTICLE_FOR_COMMENT_MINUS = "UPDATE `article` SET `comment` = `comment` - 1 WHERE `no`=?";
-	public final static String UPDATE_COMMENT = "UPDATE `article` SET `content`=? WHERE `no`=?";
 	
+	//댓글 수정
+	public final static String UPDATE_COMMENT = "UPDATE `Article` SET `content`=? WHERE `no`=?";
+	
+	//댓글 삭제
 	public final static String DELETE_COMMENT = "DELETE FROM `article` WHERE `no`=?";
 	
+	//게시판 글 삭제
 	public final static String DELETE_ARTICLE = "DELETE FROM `article` WHERE `no`=? OR `parent`=?";
 	
 	//File
