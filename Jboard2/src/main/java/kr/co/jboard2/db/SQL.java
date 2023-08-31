@@ -15,7 +15,7 @@ public class SQL {
 											+ "`regip`=?,"
 											+ "`regDate`=NOW()";
 	
-	public static final String SELECT_USER        = "SELECT * FROM `user` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
+	public static final String SELECT_USER        = "SELECT * FROM `User` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
 	//아이디 찾기 이메일 인증
 	public static final String SELECT_USER_BY_NAME_AND_EMAIL = "SELECT * FROM `user` WHERE `name`=? AND `email`=?";
 	public static final String SELECT_COUNT_UID   = "SELECT COUNT(*) FROM `user` WHERE `uid`=?";
@@ -56,9 +56,11 @@ public class SQL {
 														+ " WHERE `uid`=?";
 	
 	// Article
+	//게시판 글 작성
 	public final static String INSERT_ARTICLE = "INSERT INTO `Article` SET "
 												+ "`title`=?, "
 												+ "`content`=?,"
+												+ "`file`=?,"
 												+ "`writer`=?,"
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
@@ -70,6 +72,9 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	//파일 전송 관련
+	public final static String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `Article`";
+
 	public final static String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no`=?";
 	public final static String SELECT_ARTICLES = "SELECT "
 												+ "a.*, "
@@ -79,15 +84,20 @@ public class SQL {
 												+ "WHERE `parent`=0 "
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
-	
+	//게시판 글쓰기
+	public final static String SELECT_ARTICLES2 = "SELECT * FROM `Article`";
+			
 	public final static String SELECT_COMMENTS = "SELECT "
 												+ "a.*, "
 												+ "b.`nick` "
-												+ "FROM `article` AS a "
-												+ "JOIN `user` AS b ON a.writer = b.uid "
+												+ "FROM `Article` AS a "
+												+ "JOIN `User` AS b ON a.writer = b.uid "
 												+ "WHERE `parent`=?";
 	
 	public final static String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` WHERE `parent`=0";
+	
+	//댓글 쓰기
+	
 	public final static String UPDATE_ARTICLE = "UPDATE `article` SET `title`=?, `content`=? WHERE `no`=?";
 	public final static String UPDATE_ARTICLE_FOR_COMMENT_PLUS = "UPDATE `article` SET `comment` = `comment` + 1 WHERE `no`=?";
 	public final static String UPDATE_ARTICLE_FOR_COMMENT_MINUS = "UPDATE `article` SET `comment` = `comment` - 1 WHERE `no`=?";
@@ -96,5 +106,13 @@ public class SQL {
 	public final static String DELETE_COMMENT = "DELETE FROM `article` WHERE `no`=?";
 	
 	public final static String DELETE_ARTICLE = "DELETE FROM `article` WHERE `no`=? OR `parent`=?";
+	
+	//File
+	//파일 테이블 Insert
+	public final static String INSERT_FILE = "INSERT INTO `file` SET "
+											+ "`ano`=?,"
+											+ "`ofile`=?,"
+											+ "`sfile`=?,"
+											+ "`rdate`=NOW()";
 	
 }

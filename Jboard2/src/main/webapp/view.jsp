@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <main id="board">
     <section class="view">
         
@@ -7,7 +8,7 @@
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title" value="제목입니다." readonly/></td>
+                <td><input type="text" name="title" value="제목입니다." readonly/>${article.title}</td>
             </tr>
             <tr>
                 <th>파일</th>
@@ -16,7 +17,7 @@
             <tr>
                 <th>내용</th>
                 <td>
-                    <textarea name="content" readonly>내용 샘플입니다.</textarea>
+                    <textarea name="content" readonly>${article.content}</textarea>
                 </td>
             </tr>                    
         </table>
@@ -29,26 +30,29 @@
 
         <!-- 댓글목록 -->
         <section class="commentList">
-            <h3>댓글목록</h3>                   
-
-            <article>
-                <span class="nick">길동이</span>
-                <span class="date">20-05-20</span>
-                <p class="content">댓글 샘플 입니다.</p>                        
-                <div>
-                    <a href="#" class="remove">삭제</a>
-                    <a href="#" class="modify">수정</a>
-                </div>
-            </article>
-
-            <p class="empty">등록된 댓글이 없습니다.</p>
-
+	            <h3>댓글목록</h3>                   
+				<c:forEach var="comment" items="${comments}">
+		            <article>
+		                <span class="nick">${comment.nick}</span>
+		                <span class="date">${comment.rdate}</span>
+		                <p class="content">${comment.content}</p>                        
+		                <div>
+		                    <a href="#" class="remove">삭제</a>
+		                    <a href="#" class="modify">수정</a>
+		                </div>
+		            </article>
+				</c:forEach>
+				<c:if test="${comments.size() == 0}">
+		            <p class="empty">등록된 댓글이 없습니다.</p>
+				</c:if>
         </section>
 
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
+            <form action="/Jboard2/comment.do" method="POST">
+            	<input type="hidden" name="parent" value="${no}"/>
+            	<input type="hidden" name="writer" value="${sessUser.uid}"/>
                 <textarea name="content">댓글내용 입력</textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>

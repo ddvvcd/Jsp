@@ -3,7 +3,8 @@
 <main id="board">
     <section class="write">
 
-        <form action="#">
+        <form action="/Jboard2/write.do" method="POST" enctype="multipart/form-data">	 <!-- 표현언어의 내장객체 생략, 글쓴이는 로그인한 유저 -->
+        	<input type="hidden" name="writer" value="${sessionScope.sessUser.uid}"/>
             <table border="0">
                 <caption>글쓰기</caption>
                 <tr>
@@ -18,14 +19,14 @@
                 </tr>
                 <tr>
                     <th>파일</th>
-                    <td>
-                        <input type="file" name="file"/>
+                    <td> <!-- mulitple 속성 : 업로드시 파일 여러개 넣을 수 있음 -->
+                        <input type="file" multiple="multiple" name="file"/>
                     </td>
                 </tr>
             </table>
             
             <div>
-                <a href="./list.html" class="btn btnCancel">취소</a>
+                <a href="./list.do" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>
