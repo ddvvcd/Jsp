@@ -25,7 +25,7 @@ public class User3Service {
 		dao.updateUser3(dto);
 	}
 	
-	public void deleteUser3() {
-		dao.deleteUser3();
+	public void deleteUser3(String uid) {
+		dao.deleteUser3(uid);
 	}
 }

@@ -51,18 +51,29 @@ public enum ArticleService {
 		dao.deleteArticle(no);
 	}
 	
+<<<<<<< HEAD
 	//여기서 부터 추가함
 	//글 키워드 검색
 	public int selectCountTotal(String search) {
 		return dao.selectCountTotal(search);
+=======
+	//여기서 부터 추가함 (댓글관련?)
+	public int selectCountTotal() {
+		return dao.selectCountTotal();
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	}
 	
 	public List<ArticleDTO> selectComments(String parent) {
 		return dao.selectComments(parent);
 	}
 	
+<<<<<<< HEAD
 	public int insertComment(ArticleDTO dto) {
 		return dao.insertComment(dto);
+=======
+	public void insertComment(ArticleDTO dto) {
+		dao.insertComment(dto);
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	}	
 	
 	public void updateArticleForCommentPlus(String no) {
@@ -77,8 +88,13 @@ public enum ArticleService {
 		dao.updateComment(no, content);
 	}
 	
+<<<<<<< HEAD
 	public int deleteComment(String no) {
 		return dao.deleteComment(no);
+=======
+	public void deleteComment(String no) {
+		dao.deleteComment(no);
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	}
 	
 	//업로드 경로 구하기

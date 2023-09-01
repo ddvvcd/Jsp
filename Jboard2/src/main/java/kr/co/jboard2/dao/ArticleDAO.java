@@ -183,12 +183,17 @@ public class ArticleDAO extends DBHelper {
 	
 	//여기서 부턴 추가
 	
+<<<<<<< HEAD
 	public int selectCountTotal(String search) {
+=======
+	public int selectCountTotal() {
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 		
 		int total = 0;
 		
 		try {
 			conn = getConnection();
+<<<<<<< HEAD
 			if(search == null) {
 				psmt = conn.prepareStatement(SQL.SELECT_COUNT_TOTAL);
 
@@ -197,6 +202,9 @@ public class ArticleDAO extends DBHelper {
 				psmt.setString(1, "%"+search+"%");
 			}
 			
+=======
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_TOTAL);
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
@@ -247,10 +255,14 @@ public class ArticleDAO extends DBHelper {
 		return comments;
 	}
 	
+<<<<<<< HEAD
 	//댓글 작성
 	public int insertComment(ArticleDTO dto) {
 		
 		int result = 0;
+=======
+	public void insertComment(ArticleDTO dto) {
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 		
 		try {
 			logger.info("ArticleDAO insertComment...1");
@@ -260,7 +272,11 @@ public class ArticleDAO extends DBHelper {
 			psmt.setString(2, dto.getContent());
 			psmt.setString(3, dto.getWriter());
 			psmt.setString(4, dto.getRegip());
+<<<<<<< HEAD
 			result = psmt.executeUpdate();
+=======
+			psmt.executeUpdate();
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 			close();
 			
 			logger.info("ArticleDAO insertComment...2");
@@ -268,8 +284,11 @@ public class ArticleDAO extends DBHelper {
 		} catch (Exception e) {
 			logger.error("ArticleDAO insertComment error : " + e.getMessage());
 		}
+<<<<<<< HEAD
 		
 		return result;
+=======
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	}
 	
 	public void updateArticleForCommentPlus(String no) {
@@ -326,18 +345,29 @@ public class ArticleDAO extends DBHelper {
 		}
 	}
 	
+<<<<<<< HEAD
 	public int deleteComment(String no) {
 		int result = 0;
+=======
+	public void deleteComment(String no) {
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
 			psmt.setString(1, no);
+<<<<<<< HEAD
 			result = psmt.executeUpdate();
+=======
+			psmt.executeUpdate();
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 			close();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
 		return result;
+=======
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	}
 	
 }

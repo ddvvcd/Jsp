@@ -131,7 +131,7 @@ public class User3DAO {
 			psmt.setString(2, dto.getHp());
 			psmt.setInt(3, dto.getAge());
 			psmt.setString(4, dto.getUid());
-			psmt.executeQuery();
+			psmt.executeUpdate();
 			
 			psmt.close();
 			conn.close();
@@ -141,7 +141,7 @@ public class User3DAO {
 		}
 	}
 	
-	public void deleteUser3() {
+	public void deleteUser3(String uid) {
 		try {
 			logger.info("User3DAO deleteUser3...1");
 			Context initCtx = new InitialContext();
@@ -150,6 +150,7 @@ public class User3DAO {
 			Connection conn = ds.getConnection();
 			
 			PreparedStatement psmt = conn.prepareStatement("DELETE `User3` SET `uid`=?");
+			psmt.setString(1, uid);
 			
 			psmt.close();
 			conn.close();

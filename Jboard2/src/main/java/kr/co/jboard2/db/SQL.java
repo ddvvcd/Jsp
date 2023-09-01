@@ -77,12 +77,18 @@ public class SQL {
 	public final static String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `Article`";
 
 	//게시판 글 목록
+<<<<<<< HEAD
 	public final static String SELECT_ARTICLE = "SELECT * FROM `Article` AS a "
 												+ "LEFT JOIN `File` AS b "
 												+ "ON a.`no` = b.`ano` "
 												+ "WHERE `no`=?";
 	
 	//게시판 글 쓰기, 글 키워드 검색
+=======
+	public final static String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no`=?";
+	
+	//게시판 글 쓰기
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	public final static String SELECT_ARTICLES = "SELECT "
 												+ "a.*, "
 												+ "b.`nick` "
@@ -91,6 +97,7 @@ public class SQL {
 												+ "WHERE `parent`=0 "
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";
+<<<<<<< HEAD
 	
 	//글 키워드 검색
 	public final static String SELECT_ARTICLES_FOR_SEARCH = "SELECT "
@@ -102,6 +109,9 @@ public class SQL {
 															+ "ORDER BY `no` DESC "
 															+ "LIMIT ?, 10";
 	
+=======
+			
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	public final static String SELECT_COMMENTS = "SELECT "
 												+ "a.*, "
 												+ "b.`nick` "
@@ -115,6 +125,7 @@ public class SQL {
 	public final static String SELECT_COUNT_TOTAL_FOR_SEARCH = "SELECT COUNT(*) FROM `Article` WHERE `parent`=0 AND `title` LIKE ?";
 	
 	//댓글 쓰기
+<<<<<<< HEAD
 	public final static String UPDATE_ARTICLE = "UPDATE `article` SET `Title`=?, `content`=? WHERE `no`=?";
 	public final static String UPDATE_ARTICLE_FOR_COMMENT_PLUS = "UPDATE `Article` SET `comment` = `comment` + 1 WHERE `no`=?";
 	public final static String UPDATE_ARTICLE_FOR_COMMENT_MINUS = "UPDATE `Article` SET `comment` = `comment` - 1 WHERE `no`=?";
@@ -127,6 +138,20 @@ public class SQL {
 	
 	//게시판 글 삭제 (댓글 포함 삭제)
 	public final static String DELETE_ARTICLE = "DELETE FROM `Article` WHERE `no`=? OR `parent`=?";
+=======
+	public final static String UPDATE_ARTICLE = "UPDATE `article` SET `title`=?, `content`=? WHERE `no`=?";
+	public final static String UPDATE_ARTICLE_FOR_COMMENT_PLUS = "UPDATE `article` SET `comment` = `comment` + 1 WHERE `no`=?";
+	public final static String UPDATE_ARTICLE_FOR_COMMENT_MINUS = "UPDATE `article` SET `comment` = `comment` - 1 WHERE `no`=?";
+	
+	//댓글 수정
+	public final static String UPDATE_COMMENT = "UPDATE `Article` SET `content`=? WHERE `no`=?";
+	
+	//댓글 삭제
+	public final static String DELETE_COMMENT = "DELETE FROM `article` WHERE `no`=?";
+	
+	//게시판 글 삭제
+	public final static String DELETE_ARTICLE = "DELETE FROM `article` WHERE `no`=? OR `parent`=?";
+>>>>>>> 08f7dbee393fd43b9eb7ac06d6102beac78b3667
 	
 	//File
 	//파일 테이블 Insert
