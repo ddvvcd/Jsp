@@ -1,7 +1,8 @@
 package kr.co.jboard2.dto;
 
 public class FileDTO {
-
+	
+	//기존 필드
 	private int fno;
 	private int ano;
 	private String ofile;
@@ -9,6 +10,7 @@ public class FileDTO {
 	private int download;
 	private String rdate;
 	
+	//기존 필드 Getter, Setter
 	public int getFno() {
 		return fno;
 	}
@@ -45,4 +47,10 @@ public class FileDTO {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	@Override //마우스 오른쪽 -> source -> generate toString -> 모두 선택 -> 생성
+	public String toString() { //dto의 값을 출력하는 toString()
+		return "FileDTO [fno=" + fno + ", ano=" + ano + ", ofile=" + ofile + ", sfile=" + sfile + ", download="
+				+ download + ", rdate=" + rdate + "]";
+	}
+	
 }

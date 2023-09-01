@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import kr.co.jboard2.db.DBHelper;
 import kr.co.jboard2.db.SQL;
 import kr.co.jboard2.dto.ArticleDTO;
+import kr.co.jboard2.dto.FileDTO;
 
 public class ArticleDAO extends DBHelper {
 
@@ -71,6 +72,15 @@ public class ArticleDAO extends DBHelper {
 				article.setWriter(rs.getString(9));
 				article.setRegip(rs.getString(10));
 				article.setRdate(rs.getString(11));
+				//파일 정보
+				FileDTO fileDto = new FileDTO();
+				fileDto.setFno(rs.getInt(12));
+				fileDto.setAno(rs.getInt(13));
+				fileDto.setOfile(rs.getNString(14));
+				fileDto.setSfile(rs.getString(15));
+				fileDto.setDownload(rs.getInt(16));
+				fileDto.setRdate(rs.getString(17));
+				article.setFileDto(fileDto);
 			}
 			
 			logger.info("ArticleDAO selectArticle...2");
@@ -83,7 +93,7 @@ public class ArticleDAO extends DBHelper {
 		return article;
 	}
 	
-	public List<ArticleDTO> selectArticles(int start) {
+	public List<ArticleDTO> selectArticles(int start, String search) {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
 		
@@ -91,8 +101,15 @@ public class ArticleDAO extends DBHelper {
 			logger.info("ArticleDAO selectArticles...1");
 
 			conn = getConnection();
-			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
-			psmt.setInt(1, start);
+			if(search == null) {
+				psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
+				psmt.setInt(1, start);
+			}else {
+				psmt = conn.prepareStatement(SQL.SELECT_ARTICLES_FOR_SEARCH);
+				psmt.setString(1, "%"+search+"%");
+				psmt.setInt(2, start);
+			}
+			
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
@@ -127,10 +144,70 @@ public class ArticleDAO extends DBHelper {
 	
 	public void updateArticle(ArticleDTO dto) {
 		
+		try {
+			logger.info("ArticleDAO updateArticle...1");
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setInt(3, dto.getNo());
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO updateArticle...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAO updateArticle error : " + e.getMessage());
+		}
 	}
 	
-	public void deleteArticle(int no) {
+	public void deleteArticle(String no) {
 		
+		try {
+			
+			logger.info("ArticleDAO deleteArticle...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO deleteArticle...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAO deleteArticle error : " + e.getMessage());
+		}
+	}
+	
+	//여기서 부턴 추가
+	
+	public int selectCountTotal(String search) {
+		
+		int total = 0;
+		
+		try {
+			conn = getConnection();
+			if(search == null) {
+				psmt = conn.prepareStatement(SQL.SELECT_COUNT_TOTAL);
+
+			}else {
+				psmt = conn.prepareStatement(SQL.SELECT_COUNT_TOTAL_FOR_SEARCH);
+				psmt.setString(1, "%"+search+"%");
+			}
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				total = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO selectCountTotal error : " + e.getMessage());
+		}
+		
+		return total;
 	}
 	
 	public List<ArticleDTO> selectComments(String parent) {
@@ -168,6 +245,99 @@ public class ArticleDAO extends DBHelper {
 		}
 		
 		return comments;
+	}
+	
+	//댓글 작성
+	public int insertComment(ArticleDTO dto) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("ArticleDAO insertComment...1");
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
+			psmt.setInt(1, dto.getParent());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getWriter());
+			psmt.setString(4, dto.getRegip());
+			result = psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO insertComment...2");
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO insertComment error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	public void updateArticleForCommentPlus(String no) {
+		
+		try {
+			logger.info("ArticleDAO updateArticleForCommentPlus...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE_FOR_COMMENT_PLUS);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO updateArticleForCommentPlus...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAo updateArticleForCommentPlus error : " + e.getMessage());
+		}
+	}
+	
+	public void updateArticleForCommentMinus(String no) {
+		
+		try {
+			logger.info("ArticleDAO updateArticleForCommentMinus...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_ARTICLE_FOR_COMMENT_MINUS);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO updateArticleForCommentMinus...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAo updateArticleForCommentMinus error : " + e.getMessage());
+		}
+	}
+	
+	public void updateComment(String no, String content) {
+		try {
+			logger.error("ArticleDAO updateComment...1");
+
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_COMMENT);
+			psmt.setString(1, no);
+			psmt.setString(2, content);
+			psmt.executeUpdate();
+			close();
+			
+			logger.error("ArticleDAO updateComment...2");
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO updateComment error : " + e.getMessage());
+		}
+	}
+	
+	public int deleteComment(String no) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			result = psmt.executeUpdate();
+			close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 }

@@ -29,8 +29,36 @@ public class FileDAO extends DBHelper {
 		}
 	}
 	
-	public FileDTO selectFile(int fno) {
-		return null;
+	//파일 다운로드
+	public FileDTO selectFile(String fno) {
+		
+		FileDTO dto = null;
+		
+		try {
+			logger.info("FileDAo selectFile...1");
+
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_FILE);
+			psmt.setString(1, fno); //? (파라미터)가 하나였음
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new FileDTO();
+				dto.setFno(rs.getInt(1));
+				dto.setAno(rs.getInt(2));
+				dto.setOfile(rs.getString(3));
+				dto.setSfile(rs.getString(4));
+				dto.setDownload(rs.getInt(5));
+				dto.setRdate(rs.getString(6));
+			}
+		
+			close();
+			logger.info("FileDAo selectFile...2");
+		} catch (Exception e) {
+			logger.error("FileDAO selectFile error : " + e.getMessage());
+		}
+		
+		return dto;
 	}
 	
 	public List<FileDTO> selectFiles() {
@@ -41,7 +69,24 @@ public class FileDAO extends DBHelper {
 		
 	}
 	
-	public void deleteFile(int fno) {
+	public int deleteFile(String ano) {
 		
+		int result = 0;
+		
+		try {
+			logger.info("FileDAO deleteFile...1");
+
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_FILE);
+			psmt.setString(1, ano);
+			result = psmt.executeUpdate();
+			close();
+			
+			logger.info("FileDAO deleteFile...2");
+		} catch (Exception e) {
+			logger.error("FileDAO deleteFile error : " + e.getMessage());
+		}
+		
+		return result;
 	}
 }

@@ -13,16 +13,25 @@ public class ArticleDTO {
 	private String regip;
 	private String rdate;
 	
-	// 추가필드
+	//추가필드
 	private String nick;
+	private FileDTO fileDto;
 	
+	//추가필드 Getter, Setter
 	public String getNick() {
 		return nick;
 	}
 	public void setNick(String nick) {
 		this.nick = nick;
 	}
+	public FileDTO getFileDto() {
+		return fileDto;
+	}
+	public void setFileDto(FileDTO fileDto) {
+		this.fileDto = fileDto;
+	}
 	
+	//기존필드 Getter, Setter
 	public int getNo() {
 		return no;
 	}

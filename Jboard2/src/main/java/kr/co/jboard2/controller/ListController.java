@@ -33,15 +33,41 @@ public class ListController extends HttpServlet{
 		HttpSession session = req.getSession();
 		UserDTO sessUser = (UserDTO) session.getAttribute("sessUser");
 		
-		int page=1;
-		int pg = 10;
-		int start = (page -1) * pg;
+		//데이터 수신
+		String pg = req.getParameter("pg");
+		String search = req.getParameter("search");
+		
+		//현재 페이지 번호
+		int currentPage = service.getCurrentPage(pg);
+		
+		//전제 게시물 갯수
+		int total = service.selectCountTotal(search);
+		
+		//마지막 페이지 번호
+		int lastPageNum = service.getLastPageNum(total);
+		
+		//페이지 그룹 start, end 번호
+		int[] result = service.getPageGroupNum(currentPage, lastPageNum);
+		
+		//페이지 시작번호
+		int pageStartNum = service.getPageStartNum(total, currentPage);
+		
+		//시작 인덱스
+		int start = service.getStartNum(currentPage);
+		
+		//글 조회
+		List<ArticleDTO> articles = service.selectArticles(start, search);
 		
 		if(sessUser != null) {
-			List<ArticleDTO> articles = service.selectArticles(start);
 			
+			//View 공유 참조
 			//List의 articles는 list.jsp에서 <forEach>문에서 반복문으로 들어감
 			req.setAttribute("articles", articles);
+			req.setAttribute("currentPage", currentPage);
+			req.setAttribute("lastPageNum", lastPageNum);
+			req.setAttribute("pageGroupStart", result[0]);
+			req.setAttribute("pageGroupEnd", result[1]);
+			req.setAttribute("pageStartNum", pageStartNum+1);
 
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/list.jsp");
 			dispatcher.forward(req, resp);
