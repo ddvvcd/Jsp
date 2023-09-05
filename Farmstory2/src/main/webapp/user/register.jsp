@@ -1,34 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../_header.jsp" %>
-<script>
-	//아이디 중복체크
-	const inputUid = document.getElementByName('uid')[0];
-	const uidResult = document.getElementByClassName('uidResult')[0];
-	const btnCheckUid = document.getElementById('btnCheckUid');
-	
-	if(btnCheckUid != null){
-		
-		btnCheckUid.onclick = function(){
-			
-			const uid = inputUid.value;
-			
-			//아이디 유효성 검사
-			if(!uid.match(reUid)){
-				uidResult.innerText = '유효한 아이디가 아닙니다.';
-				uidResult.style.color = 'red';
-				isUidOk = false;
-				return;
-			}
-			
-			//서버 전송
-			const xhr = new XMLHttpResuext();
-			xhr.open('GET', '/Farmstory2/user/checkUid.do?uid='+uid);
-			xhr.send();
-			
-		}
-	}
-
-</script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Farmstory2/js/zipCode.js"></script>
+<script src="/Farmstory2/js/validation.js"></script>
+<script src="/Farmstory2/js/checkUser.js"></script>
 <div id="user">
 	<section class="register">
         <form id="formUser" action="/Farmstory2/user/register.do" method="post">

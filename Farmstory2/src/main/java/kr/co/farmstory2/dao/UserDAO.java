@@ -106,6 +106,86 @@ public class UserDAO extends DBHelper{
 		return result;
 	}
 	
+	public int selectCountNick(String nick) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("UserDAO selectCountNick...1");
+
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_NICK);
+			psmt.setString(1, nick);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+			logger.info("UserDAO selectCountNick...2");
+
+		} catch (Exception e) {
+			logger.error("UserDAO selectCountNick error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	public int selectCountEmail(String email) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("UserDAO selectCountEmail...1");
+
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_EMAIL);
+			psmt.setString(1, email);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+			logger.info("UserDAO selectCountEmail...2");
+
+		} catch (Exception e) {
+			logger.error("UserDAO selectCountEmail error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	public int selectCountHp (String hp) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("UserDAO selectCountHP...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_HP);
+			psmt.setString(1, hp);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+			logger.info("UserDAO selectCountHP...2");
+			
+		} catch (Exception e) {
+			logger.error("UserDAO selectCountHp error : " + e.getMessage());
+		}
+		return result;
+	}
+	
 	public List<UserDTO> selectUsers() {
 		
 		return null;

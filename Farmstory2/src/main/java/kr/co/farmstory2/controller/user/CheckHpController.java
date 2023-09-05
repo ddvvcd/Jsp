@@ -16,23 +16,25 @@ import com.google.gson.JsonObject;
 
 import kr.co.farmstory2.service.UserService;
 
-@WebServlet("/user/checkUid.do")
-public class CheckUidController extends HttpServlet{
+@WebServlet("/user/checkHp.do")
+public class CheckHpController extends HttpServlet{
 
-	private static final long serialVersionUID = -4413450232588058294L;
-	UserService service = new UserService();
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final long serialVersionUID = -1436918846868634094L;
 	
+	UserService service = new UserService();
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+		String hp = req.getParameter("hp");
 		
-		String uid = req.getParameter("uid");
-		
-		int result = service.selectCountUid(uid);
+		int result = service.selectCountHp(hp);
 		
 		logger.info("result : " + result);
-		
+		logger.debug("hp : " + hp);
+		logger.debug("result : " + result);
 		
 		//JSON 생성
 		JsonObject json = new JsonObject();
@@ -42,4 +44,6 @@ public class CheckUidController extends HttpServlet{
 		PrintWriter writer = resp.getWriter();
 		writer.print(json.toString());
 	}
+	
+	
 }

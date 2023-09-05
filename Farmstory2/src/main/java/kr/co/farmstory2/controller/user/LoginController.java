@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.farmstory2.dto.UserDTO;
 import kr.co.farmstory2.service.UserService;
 
@@ -17,6 +20,9 @@ import kr.co.farmstory2.service.UserService;
 public class LoginController extends HttpServlet{
 
 	private static final long serialVersionUID = -6259363977100195051L;
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	UserService service = new UserService();
 	
 	@Override
@@ -37,7 +43,12 @@ public class LoginController extends HttpServlet{
 		String uid = req.getParameter("uid");
 		String pass = req.getParameter("pass");
 		
+		logger.debug("uid : " + uid);
+		logger.debug("pass : " + pass);
+		
+		
 		UserDTO user = service.selectUser(uid, pass);
+		logger.debug("user : " + user);
 		
 		if(user != null) {
 			

@@ -7,7 +7,7 @@
                     <img src="../images/sub_aside_cate2_tit.png" alt="장보기"/>
 
                     <ul class="lnb">
-                        <li class="on"><a href="./market.jsp">장보기</a></li>
+                        <li class="on"><a href="./market.do">장보기</a></li>
                     </ul>
                 </aside>
                 <article class="view">
@@ -54,7 +54,7 @@
                                 <td class="total">4,000원</td>
                             </tr>
 
-                            <a href="./order.html" class="btnOrder">
+                            <a href="./order.do" class="btnOrder">
                                 <img src="../images/market_btn_order.gif" alt="바로 구매하기"/>
                             </a>
 

@@ -8,7 +8,7 @@
                     <img src="../images/sub_aside_cate2_tit.png" alt="장보기"/>
 
                     <ul class="lnb">
-                        <li class="on"><a href="./market.jsp">장보기</a></li>
+                        <li class="on"><a href="./market.do">장보기</a></li>
                     </ul>
                 </aside>
                 <article class="list">
@@ -29,7 +29,7 @@
                     <table border="0">
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item1.jpg" alt="사과 500g"></a>
+                                <a href="./view.do"><img src="../images/market_item1.jpg" alt="사과 500g"></a>
                             </td>
                             <td>과일</td>
                             <td><a href="#">사과 500g</a></td>
@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item2.jpg" alt="배 5kg"></a>
+                                <a href="./view.do"><img src="../images/market_item2.jpg" alt="배 5kg"></a>
                             </td>
                             <td>과일</td>
                             <td><a href="#">배 5kg</a></td>
@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item3.jpg" alt="방울토마토"></a>
+                                <a href="./view.do"><img src="../images/market_item3.jpg" alt="방울토마토"></a>
                             </td>
                             <td>야채</td>
                             <td><a href="#">방울토마토</a></td>
@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item4.jpg" alt="딸기 500g"></a>
+                                <a href="./view.do"><img src="../images/market_item4.jpg" alt="딸기 500g"></a>
                             </td>
                             <td>과일</td>
                             <td><a href="#">딸기 500g</a></td>
@@ -61,7 +61,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item5.jpg" alt="ㅊ"></a>
+                                <a href="./view.do"><img src="../images/market_item5.jpg" alt="ㅊ"></a>
                             </td>
                             <td>과일</td>
                             <td><a href="#">오렌지</a></td>
@@ -69,7 +69,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item6.jpg" alt="무농약현미"></a>
+                                <a href="./view.do"><img src="../images/market_item6.jpg" alt="무농약현미"></a>
                             </td>
                             <td>곡류</td>
                             <td><a href="#">무농약현미</a></td>
@@ -77,7 +77,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.jsp"><img src="../images/market_item7.jpg" alt="팜스토리 하루야채 샐러드"></a>
+                                <a href="./view.do"><img src="../images/market_item7.jpg" alt="팜스토리 하루야채 샐러드"></a>
                             </td>
                             <td>야채</td>
                             <td><a href="#">팜스토리 하루야채 샐러드</a></td>
@@ -85,7 +85,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a href="./view.html"><img src="../images/market_item8.jpg" alt="바나나"></a>
+                                <a href="./view.do"><img src="../images/market_item8.jpg" alt="바나나"></a>
                             </td>
                             <td>과일</td>
                             <td><a href="#">바나나</a></td>
