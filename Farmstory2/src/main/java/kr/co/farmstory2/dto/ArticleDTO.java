@@ -26,6 +26,9 @@ public class ArticleDTO {
 	public void setParent(int parent) {
 		this.parent = parent;
 	}
+	public void setParent(String parent) {
+		this.parent = Integer.parseInt(parent);
+	}
 	public int getComment() {
 		return comment;
 	}
@@ -56,6 +59,15 @@ public class ArticleDTO {
 	public void setFile(int file) {
 		this.file = file;
 	}
+
+	public void setFile(String oName) {
+		if(oName != null) {
+			this.file = 1;
+		}else {
+			this.file = 0;
+		}
+	}
+	
 	public int getHit() {
 		return hit;
 	}

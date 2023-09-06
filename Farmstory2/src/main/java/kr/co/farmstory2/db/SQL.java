@@ -38,12 +38,16 @@ public class SQL {
 	public final static String INSERT_ARTICLE = "INSERT INTO `Article` SET "
 												+ "`cate`=?, "
 												+ "`title`=?, "
-												+ "`content`=?,"
-												+ "`file`=?,"
-												+ "`writer`=?,"
-												+ "`regip`=?,"
+												+ "`content`=?, "
+												+ "`file`=?, "
+												+ "`writer`=?, "
+												+ "`regip`=?, "
 												+ "`rdate`=NOW()";
-										
+	
+	//파일 전송 관련 (no열 중 최대 값을 선택하는 쿼리)
+	public final static String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `Article`";
+
+	//글 목록 조회 (Article)
 	public static final String SELECT_ARTICLE = "SELECT * FROM `Article` WHERE `no`=?";
 	
 	public final static String SELECT_ARTICLES = "SELECT "
@@ -54,4 +58,32 @@ public class SQL {
 												+ "WHERE `parent`=0 "
 												+ "ORDER BY `no` DESC "
 												+ "LIMIT ?, 10";	
+	//댓글 조회
+	public final static String SELECT_COMMENTS = "SELECT "
+												+ "a.*, "
+												+ "b.`nick` "
+												+ "FROM `Article` AS a "
+												+ "JOIN `User` AS b ON a.writer = b.uid "
+												+ "WHERE `parent`=?";
+	
+	//댓글 작성
+	public final static String INSERT_COMMENT = "INSERT INTO `Article` SET "
+												+ "`parent`=?, "
+												+ "`content`=?,"
+												+ "`writer`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
+	
+	//전체 게시물 갯수
+	public final static String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` WHERE `parent`=0 AND `cate`=?";
+	
+	
+	//File 
+	public static final String INSERT_FILE = "INSERT INTO `File` SET "
+											+ "`fno`=?, "
+											+ "`ano`=?, "
+											+ "`oriName`=?, "
+											+ "`newName`=?, "
+											+ "`download`=?, "
+											+ "`rdate`=NOW()";
 	}

@@ -6,7 +6,7 @@
 			<section class="write">
 			    <h3>글쓰기</h3>
 			    <article>
-			        <form action="/Farmstory2/board/write.do" method="post">
+			        <form action="/Farmstory2/board/write.do" method="post" enctype="multipart/form-data">
 			        <input type="hidden" name="writer" value="${sessUser.uid}"/>
 			        <input type="hidden" name="group" value="${group}"/>
 			        <input type="hidden" name="cate" value="${cate}"/>
@@ -22,12 +22,12 @@
 			                    </td>
 			                </tr>
 			                <tr>
-			                    <td>첨부</td>
+			                    <td>첨부</td><!-- multiple 속성 : 파일업로드 시 파일 여러개를 넣을 수 있음 -->
 			                    <td><input type="file" name="file"/></td>
 			                </tr>
 			            </table>
 			            <div>
-			                <a href="#" class="btnCancel">취소</a>
+			                <a href="./board/list.do" class="btnCancel">취소</a>
 			                <input type="submit"  class="btnWrite" value="작성완료">
 			            </div>
 			        </form>
