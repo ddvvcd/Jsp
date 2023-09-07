@@ -4,9 +4,9 @@
             <aside>
                 <h3>주요기능</h3>
                 <ul>
-                    <li class="on"><a href="./productList.jsp">상품관리</a></li>
-                    <li><a href="./orderList.jsp">주문관리</a></li>
-                    <li><a href="./userList.jsp">회원관리</a></li>                    
+                    <li class="on"><a href="./productList.do">상품관리</a></li>
+                    <li><a href="./orderList.do">주문관리</a></li>
+                    <li><a href="./userList.do">회원관리</a></li>                    
                 </ul>
             </aside>
             <section id="productList">
@@ -27,21 +27,23 @@
                             <th>재고</th>
                             <th>등록일</th>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" name=""/></td>
-                            <td><img src="./images/sample_item1.jpg" class="thumb" alt="샘플1"></td>
-                            <td>1011</td>
-                            <td>사과 500g</td>
-                            <td>과일</td>
-                            <td>4,000원</td>
-                            <td>100</td>
-                            <td>2023-01-01</td>
-                        </tr>
+                        <c:forEach var="product" items="${requestScope.products}">
+	                        <tr>
+	                            <td><input type="checkbox" name=""/></td>
+	                            <td><img src="/Farmstory2/upload/${product.thumb120}" class="thumb" alt="샘플1"></td>
+	                            <td>${product.pNo}</td>
+	                            <td>${product.productName}</td>
+	                            <td>${product.type}</td>
+	                            <td>${product.price}</td>
+	                            <td>${product.stock}</td>
+	                            <td>${product.rdate}</td>
+	                        </tr>
+	                	</c:forEach>   
                     </table>
 
                     <p>
                         <a href="#" class="productDelete">선택삭제</a>
-                        <a href="./productRegister.html" class="productRegister">상품등록</a>
+                        <a href="./productRegister.do" class="productRegister">상품등록</a>
                     </p>
                     
                     <p class="paging">

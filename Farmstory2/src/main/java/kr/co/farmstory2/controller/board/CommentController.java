@@ -1,9 +1,7 @@
 package kr.co.farmstory2.controller.board;
 
 import java.io.IOException;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +30,23 @@ public class CommentController extends HttpServlet{
 		String group = req.getParameter("group");
 		String cate  = req.getParameter("cate");
 		
+		//댓글 삭제
+		String kind = req.getParameter("kind");
+		String no = req.getParameter("no");
+		
+		int result = 0;
+		
+		switch(kind) {
+			case "REMOVE":
+				result = service.deleteComment(no);
+				break;
+		}
+		
+		//JSON 출력
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		resp.getWriter().print(json);
+		
 		req.setAttribute("group", group);
 		req.setAttribute("cate", cate);
 	}
@@ -45,10 +60,12 @@ public class CommentController extends HttpServlet{
 		String writer  = req.getParameter("writer");
 		String regip   = req.getRemoteAddr();
 		
+		//댓글 입력
 		req.setAttribute("parent", parent);
 		req.setAttribute("content", content);
 		req.setAttribute("writer", writer);
 		req.setAttribute("regip", regip);
+		
 		
 		logger.debug("parent : " + parent);
 		logger.debug("content : " + content);
@@ -64,6 +81,9 @@ public class CommentController extends HttpServlet{
 		
 		//댓글 입력
 		int result = service.insertComment(dto);
+		
+		//댓글 삭제
+		
 		
 		//리다이렉트(폼 전송) (이거 할 필요 없다고 하셨음)
 		//resp.sendRedirect("/Farmstory2/board/view.do?no="+parent);

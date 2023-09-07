@@ -74,6 +74,9 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	//댓글 삭제
+	public final static String DELETE_COMMENT = "DELETE FROM `Article` WHERE `no`=?";
+	
 	//전체 게시물 갯수
 	public final static String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `Article` WHERE `parent`=0 AND `cate`=?";
 	
@@ -86,4 +89,23 @@ public class SQL {
 											+ "`newName`=?, "
 											+ "`download`=?, "
 											+ "`rdate`=NOW()";
+	
+	//Product
+	//상품 등록(insert)
+	public static final String INSERT_PRODUCT = "INSERT INTO `Product` SET "
+											  + "`type`=?,"
+											  + "`productName`=?,"
+											  + "`price`=?,"
+											  + "`delivery`=?,"
+											  + "`stock`=?,"
+											  + "`thumb120`=?,"
+											  + "`thumb240`=?,"
+											  + "`thumb750`=?,"
+											  + "`seller`=?,"
+											  + "`etc`=?,"
+											  + "`rdate`=NOW()";
+	
+	//상품 목록 구현(list)
+	public static final String SELECT_PRODUCTS = "SELECT * FROM `Product` WHERE `stock` > 0";
+	
 	}

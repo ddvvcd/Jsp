@@ -44,6 +44,11 @@ public class ArticleService {
 		return dao.insertComment(dto);
 	}
 	
+	//댓글 삭제
+	public int deleteComment(String no) {
+		return dao.deleteComment(no);
+	}
+	
 	//현재 페이지 번호
 	public int getCurrentPage(String pg) {
 		int currentPage = 1;
@@ -104,8 +109,8 @@ public class ArticleService {
 	}
 	
 	//파일 다운로드
-	public MultipartRequest uploadFile(HttpServletRequest req) {
-		return dao.uploadFile(req);
+	public MultipartRequest uploadFile(HttpServletRequest req, String path) {
+		return dao.uploadFile(req, path);
 	}
 }
 

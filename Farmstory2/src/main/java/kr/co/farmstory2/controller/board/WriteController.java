@@ -51,10 +51,10 @@ public class WriteController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		//업로드 경로 구하기 (ArticleDAO에 메소드 만들어 놓음)
-		aService.getFilePath(req);
+		String path = aService.getFilePath(req);
 		
 		//파일 업로드 (ArticleDAO에 메소드 만들어 놓음)
-		MultipartRequest mr = aService.uploadFile(req);
+		MultipartRequest mr = aService.uploadFile(req, path);
 		
 		//폼 데이터 수신
 		String group   = mr.getParameter("group");

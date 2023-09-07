@@ -100,7 +100,4 @@ public class UserDTO {
 				+ ", hp=" + hp + ", role=" + role + ", zip=" + zip + ", addr1=" + addr1 + ", addr2=" + addr2
 				+ ", regip=" + regip + ", regDate=" + regDate + ", leaveDate=" + leaveDate + "]";
 	}
-	
-	
-	
 }

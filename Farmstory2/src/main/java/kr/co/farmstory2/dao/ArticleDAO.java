@@ -239,6 +239,29 @@ public class ArticleDAO extends DBHelper {
 		return result;
 	}
 	
+	//댓글 삭제
+	public int deleteComment(String no) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("ArticleDAO deleteComment...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			
+			close();
+			
+		} catch (Exception e) {
+			logger.error("ArticleDAO deleteComment error : " + e.getMessage());
+		}
+		
+		return result;
+		
+	}
+	
 	//파일 업로드 경로 구하기
 	public String getFilePath(HttpServletRequest req) {
 		ServletContext ctx = req.getServletContext();
@@ -271,10 +294,7 @@ public class ArticleDAO extends DBHelper {
 		
 	}
 	
-	public MultipartRequest uploadFile(HttpServletRequest req) {
-		
-		//파일 경로 구하기
-		String path = getFilePath(req);
+	public MultipartRequest uploadFile(HttpServletRequest req, String path) {
 		
 		//최대 업로드 파일 크기
 		int maxSize = 1024 * 1024 * 10;

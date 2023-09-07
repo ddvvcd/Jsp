@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<c:set var="ctxPath" value="${pageContext.request.contextPath}"></c:set>
 <div id="sub">
     <div><img src="../images/sub_top_tit4.png" alt="EVENT"></div>
     <section class="event">

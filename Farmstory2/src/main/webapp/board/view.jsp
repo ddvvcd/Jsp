@@ -2,7 +2,47 @@
 <%@ include file="../_header.jsp" %>
 <script>
 	$(function(){
-		//작성완료 버튼 클릭 시 에이젝스로 댓글 전송
+		
+		//댓글 삭제
+		$(document).on('click', '.del', function(e){
+			e.preventDefault(); //기본 동작 방지
+			
+			alert('댓글 삭제!');
+			
+			const no = $(this).data('no');
+			const article = $(this).parent().parent();
+			
+			console.log('no : ' + no);
+			
+			const jsonData = {
+					"kind": "REMOVE",
+					"no": no
+			}
+			
+			console.debug("kind : " + kind);
+			console.debug("no: " + no);
+			
+			$.ajax({
+				url: '/Farmstory2/board/comment.do',
+				type: 'GET',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					
+					console.log(data);
+					
+					if(data.result > 0){
+						alert('댓글이 삭제 되었습니다.');
+						
+						//화면 처리
+						article.remove();
+					}
+				}
+			});
+		}); //댓글 삭제 end
+		
+		
+		//댓글 입력 //작성완료 버튼 클릭 시 에이젝스로 댓글 전송
 		$('#btnComment').click(function(e){
 			e.preventDefault(); //기본 동작 방지
 			
@@ -29,18 +69,34 @@
 				dataType: 'json',
 				success: function(data){
 					
+					console.log(data);
+					
+					if(data.result > 0){
+						
 					alert('댓글이 작성되었습니다.');
 					
-					
-					
-					
+					//동적 화면 생성
+					const article = `<article>
+										<span class="writer">${comment.writer}</span>
+										<span class="date">${comment.rdate}</span>
+										<textarea name="comment" readonly>${comment.content}</textarea>
+										<div>
+											<a href="#" class="del">삭제</a>
+											<a href="./list.do?group=${group}&cate=${cate}" class="can">취소</a>
+											<a href="./modify.do?group=${group}&cate=${cate}" class="mod">수정</a>
+										</div>
+									</article>`;
+					$('.commentList').append(article);				
+									
+				}else{
+					alert('댓글 등록이 실패했습니다.');
 				}
 				
 			});
 			
 		});
 	});
-
+});
 </script>
 <jsp:include page="./_aside${group}.jsp"/>
 			<section class="view">
@@ -77,13 +133,12 @@
 			        	<form action="/Farmstory2/board/view.do" method="post">
       				    	<c:forEach var="comment" items="${requestScope.comments}">
 								<span>
-									<span>${comment.writer}</span>
-									<span>${comment.rdate}</span>
+									<span class="writer">${comment.writer}</span>
+									<span class="date">${comment.rdate}</span>
 								</span>
-								<textarea name="comment" readonly>댓글내용</textarea>
-				             
+								<textarea name="comment" readonly>${comment.content}</textarea>
 								<div>
-									<a href="#" class="del">삭제</a>
+									<a href="#" class="del" data-no="${comment.no}">삭제</a>
 									<a href="./list.do?group=${group}&cate=${cate}" class="can">취소</a>
 									<a href="./modify.do?group=${group}&cate=${cate}" class="mod">수정</a>
 								</div>
