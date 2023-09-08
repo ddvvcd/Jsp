@@ -44,6 +44,11 @@ public class SQL {
 												+ "`regip`=?, "
 												+ "`rdate`=NOW()";
 	
+	//글 수정
+	
+	//글 삭제
+	public final static String DELETE_ARTICLE = "DELETE FROM `Article` WHERE `no`=? OR `parent`=?";
+	
 	//파일 전송 관련 (no열 중 최대 값을 선택하는 쿼리)
 	public final static String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `Article`";
 
@@ -55,9 +60,9 @@ public class SQL {
 												+ "b.`nick` "
 												+ "FROM `Article` AS a "
 												+ "JOIN `User` AS b ON a.writer = b.uid "
-												+ "WHERE `parent`=0 "
+												+ "WHERE `parent`=0 AND `cate`=? "
 												+ "ORDER BY `no` DESC "
-												+ "LIMIT ?, 10";	
+												+ "LIMIT ?, 10";
 	//댓글 조회
 	public final static String SELECT_COMMENTS = "SELECT "
 												+ "a.*, "
@@ -105,7 +110,33 @@ public class SQL {
 											  + "`etc`=?,"
 											  + "`rdate`=NOW()";
 	
+	public static final String SELECT_PRODUCT = "SELECT * FROM `Product` WHERE `pNo`=?";
+	
 	//상품 목록 구현(list)
 	public static final String SELECT_PRODUCTS = "SELECT * FROM `Product` WHERE `stock` > 0";
 	
-	}
+	public static final String SELECT_PRODUCTS_ALL = "SELECT * FROM `Product` WHERE `stock` > 0 LIMIT ?, 10";
+	
+	public static final String SELECT_PRODUCTS_TYPE = "SELECT * FROM `Product` WHERE `stock` > 0 AND `type`=? LIMIT ?, 10";
+	
+	//
+	public static final String SELECT_PRODUCT_COUNT_PRODUCTS_ALL = "SELECT COUNT(*) FROM `Product` WHERE `stock` > 0";
+	
+	public static final String SELECT_PRODUCT_COUNT_PRODUCTS_TYPE = "SELECT COUNT(*) FROM `Product` WHERE `stock` > 0 AND `type`=?";
+	
+	//Order
+	//주문 등록
+	public static final String INSERT_ORDER = "INSERT INTO `Order` SET "
+											+ "`orderProduct`=?,"
+											+ "`orderCount`=?,"
+											+ "`orderDelivery`=?,"
+											+ "`orderPrice`=?,"
+											+ "`orderTotal`=?,"
+											+ "`orderUser`=?,"
+											+ "`hp`=?,"
+											+ "`zip`=?,"
+											+ "`addr1`=?,"
+											+ "`addr2`=?,"
+											+ "`orderEtc`=?";
+
+}

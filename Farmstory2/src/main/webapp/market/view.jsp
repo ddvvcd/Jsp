@@ -21,12 +21,12 @@
                     <!-- 내용 시작 -->
                     <h3>기본정보</h3>
                     <div class="basic">
-                        <img src="../images/market_item_thumb.jpg" alt="딸기 500g">
+                        <img src="/Farmstory2/upload/${product.thumb750}" alt="딸기 500g">
 
                         <table border="0">                            
                             <tr>
                                 <td>상품명</td>
-                                <td>딸기 500g</td>
+                                <td>${product.productName}</td>
                             </tr>
                             <tr>
                                 <td>상품코드</td>
@@ -35,13 +35,13 @@
                             <tr>
                                 <td>배송비</td>
                                 <td>
-                                    <span>5,000</span>원
+                                    <span>${product.delivery}</span>원
                                     <em>3만원 이상 무료배송</em>
                                 </td>
                             </tr>
                             <tr>
-                                <td>판매가격</td>
-                                <td>4,000원</td>
+                                <td>가격</td>
+                                <td>${product.price}원</td>
                             </tr>
                             <tr>
                                 <td>구매수량</td>

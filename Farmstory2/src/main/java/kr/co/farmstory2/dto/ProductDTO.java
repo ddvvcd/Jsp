@@ -21,6 +21,12 @@ public class ProductDTO {
 	//추가 (파일이름 재정의)
 	private String path;
 	
+	public ProductDTO(){}
+	
+	public ProductDTO(String path){
+		this.path = path;
+	}
+	
 	public int getpNo() {
 		return pNo;
 	}
@@ -85,17 +91,29 @@ public class ProductDTO {
 	public void setThumb120(String thumb120) {
 		this.thumb120 = thumb120;
 	}
+	//파일 이름 재정의
+	public void setThumb120ForRename(String thumb120) {
+		this.thumb120 = fileRename(thumb120);
+	}
 	public String getThumb240() {
 		return thumb240;
 	}
 	public void setThumb240(String thumb240) {
 		this.thumb240 = thumb240;
 	}
+	//파일 이름 재정의
+	public void setThumb240ForRename(String thumb240) {
+		this.thumb240 = fileRename(thumb240);
+	}
 	public String getThumb750() {
 		return thumb750;
 	}
 	public void setThumb750(String thumb750) {
 		this.thumb750 = thumb750;
+	}
+	//파일 이름 재정의
+	public void setThumb750ForRename(String thumb750) {
+		this.thumb750 = fileRename(thumb750);
 	}
 	public String getSeller() {
 		return seller;

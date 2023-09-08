@@ -100,7 +100,7 @@ public class ArticleDAO extends DBHelper {
 	}
 	
 	//게시물을 조회하는 메소드로, start라는 파라미터를 받아와서 시작 위치부터 일정 개수의 게시물을 검색
-	public List<ArticleDTO> selectArticles(int start) {
+	public List<ArticleDTO> selectArticles(String cate, int start) {
 		
 		List<ArticleDTO> articles = new ArrayList<>();
 		
@@ -108,7 +108,8 @@ public class ArticleDAO extends DBHelper {
 			
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
-			psmt.setInt(1, start);
+			psmt.setString(1, cate);
+			psmt.setInt(2, start);
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
@@ -141,8 +142,22 @@ public class ArticleDAO extends DBHelper {
 		
 	}
 	
-	public void deleteArticle(int no) {
-		
+	public void deleteArticle(String no) {
+		try {
+			logger.info("ArticleDAO deleteArticle...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.executeUpdate();
+			close();
+			
+			logger.info("ArticleDAO deleteArticle...2");
+
+		} catch (Exception e) {
+			logger.error("ArticleDAO deleteArticle error : " + e.getMessage());
+		}
 	}
 	
 	//////////////////////////////////////////////////////////

@@ -34,6 +34,10 @@ public class ListController extends HttpServlet {
 		req.setAttribute("cate", cate);
 		req.setAttribute("pg", pg);
 		
+		logger.debug("group : " + group);
+		logger.debug("cate : " + cate);
+		logger.debug("pg : " + pg);
+		
 		// 현재 페이지 번호
 		int currentPage = service.getCurrentPage(pg);
 		
@@ -53,7 +57,7 @@ public class ListController extends HttpServlet {
 		int start = service.getStartNum(currentPage);
 		
 		//현재 페이지 게시글 조회
-		List<ArticleDTO> articles = service.selectArticles(start);
+		List<ArticleDTO> articles = service.selectArticles(cate, start);
 		
 		req.setAttribute("articles", articles);
 		req.setAttribute("cate", cate);

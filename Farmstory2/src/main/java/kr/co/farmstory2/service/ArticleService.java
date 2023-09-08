@@ -8,6 +8,7 @@ import com.oreilly.servlet.MultipartRequest;
 
 import kr.co.farmstory2.dao.ArticleDAO;
 import kr.co.farmstory2.dto.ArticleDTO;
+import kr.co.farmstory2.dto.ProductDTO;
 
 public class ArticleService {
 	
@@ -24,8 +25,13 @@ public class ArticleService {
 	}
 	
 	//게시물 전체 조회 출력
-	public List<ArticleDTO> selectArticles(int start) {
-		return dao.selectArticles(start);
+	public List<ArticleDTO> selectArticles(String cate, int start) {
+		return dao.selectArticles(cate, start);
+	}
+	
+	//글 삭제
+	public void deleteArticle(String no) {
+		dao.deleteArticle(no);
 	}
 	
 	///////////////////////////////////////////////////////////////////////

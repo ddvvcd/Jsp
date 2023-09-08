@@ -13,7 +13,15 @@ public class ProductService {
 		dao.insertProduct(dto);
 	}
 	
-	public List<ProductDTO> selectProducts(String type) {
-		return dao.selectProducts(type);
+	public ProductDTO selectProduct(String pNo) {
+		return dao.selectProduct(pNo);
+	}
+	
+	public List<ProductDTO> selectProducts(String type, int start) {
+		return dao.selectProducts(type, start);
+	}
+	
+	public int selectCountProductsTotal(String type) {
+		return dao.selectCountProductsTotal(type);
 	}
 }

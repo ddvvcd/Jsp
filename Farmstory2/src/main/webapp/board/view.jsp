@@ -121,9 +121,9 @@
 				        </tr>
 			    </table>
 			    <div>
-			        <a href="#" class="btnDelete">삭제</a>
-			        <a href="#" class="btnModify">수정</a>
-			        <a href="#" class="btnList">목록</a>
+			        <a href="./delete.do?group=${group}&cate=${cate}&no=${article.no}" class="btnDelete">삭제</a>
+			        <a href="./modify.do?group=${group}&cate=${cate}&no=${article.no}" class="btnModify">수정</a>
+			        <a href="./list.do?$group=${group}&cate=${cate}" class="btnList">목록</a>
 			    </div>
 			    
 			    <!-- 댓글리스트 -->

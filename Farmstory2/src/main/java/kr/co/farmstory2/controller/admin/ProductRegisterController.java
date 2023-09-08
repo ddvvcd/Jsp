@@ -26,7 +26,7 @@ public class ProductRegisterController extends HttpServlet{
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	ArticleService aService = new ArticleService();
-	ProductService fService = new ProductService();
+	ProductService pService = new ProductService();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -71,23 +71,23 @@ public class ProductRegisterController extends HttpServlet{
 		logger.debug("etc : " + etc);
 		
 		//DTO 생성
-		ProductDTO dto = new ProductDTO();
+		ProductDTO dto = new ProductDTO(path);
 		
 		dto.setType(type);
 		dto.setProductName(productName);
 		dto.setPrice(price);
 		dto.setDelivery(delivery);
 		dto.setStock(stock);
-		dto.setThumb120(thumb120);
-		dto.setThumb240(thumb240);
-		dto.setThumb750(thumb750);
+		dto.setThumb120ForRename(thumb120);
+		dto.setThumb240ForRename(thumb240);
+		dto.setThumb750ForRename(thumb750);
 		dto.setSeller(seller);
 		dto.setEtc(etc);
 		
 		logger.debug(dto.toString());
 		
 		//상품 삽입
-		fService.insertProduct(dto);
+		pService.insertProduct(dto);
 		
 		
 		//리다이렉트

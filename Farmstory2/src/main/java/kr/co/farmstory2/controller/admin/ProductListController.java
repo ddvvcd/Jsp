@@ -1,6 +1,7 @@
-package kr.co.farmstory2.controller.market;
+package kr.co.farmstory2.controller.admin;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,27 +14,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.co.farmstory2.dto.ProductDTO;
+import kr.co.farmstory2.service.ArticleService;
 import kr.co.farmstory2.service.ProductService;
 
-@WebServlet("/market/view.do")
-public class ViewController extends HttpServlet{
+@WebServlet("/admin/productList.do")
+public class ProductListController extends HttpServlet{
 
-	private static final long serialVersionUID = -3295565614586754536L;
-	
-	ProductService service = new ProductService();
+	private static final long serialVersionUID = 2687586710997558482L;
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	ProductService pService = new ProductService();
+	ArticleService aService = new ArticleService();
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String pNo = req.getParameter("pNo");
-		
-		ProductDTO product = service.selectProduct(pNo);
-		
-		req.setAttribute("product", product);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/market/view.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/productList.jsp");
 		dispatcher.forward(req, resp);
+		
 	}
-}	
+}
