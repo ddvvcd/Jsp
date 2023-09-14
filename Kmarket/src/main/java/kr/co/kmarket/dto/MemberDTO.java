@@ -7,23 +7,23 @@ public class MemberDTO {
 	private int gender;
 	private String hp;
 	private String email;
-	private int type;
-	private int point;
-	private int level;
+	private int type; //구분
+	private int point; //포인트
+	private int level; //등급
 	private String zip;
 	private String addr1;
 	private String addr2;
-	private String company;
-	private String ceo;
-	private String bizRegNum;
-	private String comRegNum;
+	private String company; //회사명
+	private String ceo; //대표
+	private String bizRegNum; //사업자등록번호
+	private String comRegNum; //통신판매신고번호
 	private String tel;
-	private String manager;
-	private String managerHp;
+	private String manager; //담당자
+	private String managerHp; //담당자 휴대폰번호
 	private String fax;
-	private String regip;
-	private String wdate;
-	private String rdate;
+	private String regip; //등록 아이피
+	private String wdate; //탈퇴일
+	private String rdate; //회원가입일
 	private int etc1;
 	private int etc2;
 	private String etc3;
@@ -210,15 +210,13 @@ public class MemberDTO {
 	public void setEtc5(String etc5) {
 		this.etc5 = etc5;
 	}
-	
 	@Override
 	public String toString() {
-		return "MemberDTO [uid=" + uid + ", name=" + name + ", gender=" + gender + ", hp=" + hp
+		return "MemberDTO [uid=" + uid + ", pass=" + pass + ", name=" + name + ", gender=" + gender + ", hp=" + hp
 				+ ", email=" + email + ", type=" + type + ", point=" + point + ", level=" + level + ", zip=" + zip
 				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", company=" + company + ", ceo=" + ceo + ", bizRegNum="
 				+ bizRegNum + ", comRegNum=" + comRegNum + ", tel=" + tel + ", manager=" + manager + ", managerHp="
 				+ managerHp + ", fax=" + fax + ", regip=" + regip + ", wdate=" + wdate + ", rdate=" + rdate + ", etc1="
 				+ etc1 + ", etc2=" + etc2 + ", etc3=" + etc3 + ", etc4=" + etc4 + ", etc5=" + etc5 + "]";
 	}
-	
 }

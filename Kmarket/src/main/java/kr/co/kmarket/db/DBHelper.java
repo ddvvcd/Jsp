@@ -19,17 +19,16 @@ public class DBHelper {
 	
 	public Connection getConnection() {
 		
-		try {
+	    try {
 			Context ctx = (Context) new InitialContext().lookup("java:comp/env");
 			DataSource ds = (DataSource) ctx.lookup("jdbc/Kmarket");
-			
-			conn = ds.getConnection();
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return conn;
+
+	        conn = ds.getConnection();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return conn;
 	}
 	
 	public void close() throws SQLException {

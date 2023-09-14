@@ -8,31 +8,31 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.co.kmarket.dto.TermsDTO;
-import kr.co.kmarket.service.TermsService;
+import kr.co.kmarket.service.MemberService;
 
-@WebServlet("/member/signup.do")
-public class TermsController extends HttpServlet{
+@WebServlet("/member/logout.do")
+public class LogoutController extends HttpServlet {
 
-	private static final long serialVersionUID = -722360530067949982L;
+	private static final long serialVersionUID = -5922397494151458422L;
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	TermsService service = new TermsService();
+	MemberService service = new MemberService();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		HttpSession session = req.getSession();
 		
-		TermsDTO dto = service.selectTerms();
+		//세션 무효화
+		session.invalidate();
 		
-		req.setAttribute("dto", dto);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/member/signup.jsp");
+		//로그아웃 후 메인페이지로 이동
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/Kmarket/");
 		dispatcher.forward(req, resp);
 	}
-	
-
 }

@@ -11,6 +11,7 @@ window.onload = function(){
 	const agree = document.querySelector('.agree');
 	agree.addEventListener('click', function(e){
 		e.preventDefault();
+		console.log("클릭!");
 		
 		if(!chk1.checked){
 			alert('이용약관에 동의하셔야 합니다.');
@@ -19,9 +20,9 @@ window.onload = function(){
 			alert('전자금융거래 이용약관에 동의하셔야 합니다.');
 			return;
 		}else if(!chk3.checked){
-			alert('개인정보 수집동의에 동의하셔야 합니다.')
+			alert('개인정보 수집동의에 동의하셔야 합니다.');
 		}else if(!chk4.checked){
-			alert('위치정보 이용약관에 동의하셔야 합니다.')
+			alert('위치정보 이용약관에 동의하셔야 합니다.');
 		}else{
 			location.href = '/Kmarket/member/register.do';
 		}
@@ -60,7 +61,7 @@ window.onload = function(){
       </h3>
       <textarea class="location" readonly>${dto.getLocation()}</textarea>
       <label>
-        <input type="checkbox" name="agree4">동의합니다.
+        <input type="checkbox" name="agree4" />동의합니다.
       </label>
     </section>
     <div>

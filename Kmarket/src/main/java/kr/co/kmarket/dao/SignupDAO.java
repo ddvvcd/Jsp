@@ -5,19 +5,19 @@ import org.slf4j.LoggerFactory;
 
 import kr.co.kmarket.db.DBHelper;
 import kr.co.kmarket.db.SQL;
-import kr.co.kmarket.dto.TermsDTO;
+import kr.co.kmarket.dto.SignupDTO;
 
-public class TermsDAO extends DBHelper{
+public class SignupDAO extends DBHelper{
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//기본 CRUD 메소드 정의
-	public TermsDTO selectTerms() {
+	public SignupDTO selectTerms() {
 		
-		TermsDTO dto = new TermsDTO();
+		SignupDTO dto = new SignupDTO();
 
 		try {
-			logger.info("TermsDAO selectTerms...1");
+			logger.info("SignupDAO selectTerms...1");
 			conn = getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(SQL.SELECT_TERMS);
@@ -30,9 +30,9 @@ public class TermsDAO extends DBHelper{
 				dto.setTax(rs.getString(5));
 			}
 			
-			logger.info("TermsDAO selectTerms...2");
+			logger.info("SignupDAO selectTerms...2");
 		} catch (Exception e) {
-			logger.error("TermsDAO selectTerms error : " + e.getMessage());
+			logger.error("SignupDAO selectTerms error : " + e.getMessage());
 		}
 		
 		return dto;

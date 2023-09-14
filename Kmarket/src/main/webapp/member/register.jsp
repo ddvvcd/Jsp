@@ -1,13 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script>
 
+$('#km_uid').click(function(){
+	
+	const uid = $('input[name=km_uid]').val();
+	
+	$.ajax({
+		url:'/Kmarket/member/checkUid.do?uid='+uid,
+		type:'get',
+		dataType:'json',
+		success: function(data){
+			
+			if(data.result > 0){
+				$('.msgId').css('color', 'red').text('이미 사용중인 별명입니다.');
+			}else{
+				$('.msgId').css('color', 'green').text('사용 가능한 별명입니다.');
+			}
+			
+		}
+	});
+	
+	
+});//btnCheckNick end
+</script>
 <main id="member">
   <div class="register">
     <nav>
       <h1>일반 회원가입</h1>
     </nav>
     <form id="formMember" action="/Kmarket/member/register.do" method="POST">
-    <input type="hidden" name="type" value="REGISTER"/>
+    <input type="hidden" name="type" value="1"/>
       <section>
         <table>
           <caption>필수 정보입력</caption>
@@ -15,8 +38,8 @@
             <tr>
               <th><span class="essential">*</span>아이디</th>
               <td>
-                <input type="text" name="km_uid" placeholder="아이디를 입력" required />
-                <span class="msgId">영문, 숫자로 4~12자까지 설정해 주세요.</span>
+                <input type="text" name="km_uid" id="km_uid"placeholder="아이디를 입력" required />
+                <span class="msgId" id="msgId">영문, 숫자로 4~12자까지 설정해 주세요.</span>
               </td>
             </tr>
             <tr>

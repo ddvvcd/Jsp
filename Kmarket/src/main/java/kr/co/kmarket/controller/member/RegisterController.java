@@ -25,15 +25,18 @@ public class RegisterController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/member/register.jsp");
-		dispatcher.forward(req, resp);
+		
+
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/member/register.jsp");
+			dispatcher.forward(req, resp);
+		
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String uid = req.getParameter("km_uid");
-		String pass1 = req.getParameter("km_pass1");
-		String name = req.getParameter("km_name");
+		String uid    = req.getParameter("km_uid");
+		String pass1  = req.getParameter("km_pass1");
+		String name   = req.getParameter("km_name");
 		String gender = req.getParameter("km_gender");
 		String hp     = req.getParameter("km_hp");
 		String email  = req.getParameter("km_email");

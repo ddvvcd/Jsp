@@ -1,6 +1,6 @@
 package kr.co.kmarket.dto;
 
-public class TermsDTO {
+public class SignupDTO {
 	private String terms;
 	private String privacy;
 	private String location;

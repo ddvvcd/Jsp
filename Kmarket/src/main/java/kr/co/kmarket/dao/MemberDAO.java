@@ -13,7 +13,9 @@ public class MemberDAO extends DBHelper{
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//기본 CRUD 메소드 정의
+	//회원가입 (구매자)
 	public void insertMember(MemberDTO dto) {
+		
 		try {
 			logger.info("MemberDAO insertMember...1");
 			conn = getConnection();
@@ -37,6 +39,40 @@ public class MemberDAO extends DBHelper{
 		}
 	}
 	
+	//회원가입 (판매자)
+	public void insertMemberSeller(MemberDTO dto) {
+		
+		try {
+			logger.info("MemberDAO insertMemberSeller...1");
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.INSERT_MEMBER_SELLER);
+			psmt.setString(1, dto.getUid());
+			psmt.setString(2, dto.getPass());
+			psmt.setString(3, dto.getCompany());
+			psmt.setString(4, dto.getCeo());
+			psmt.setString(5, dto.getBizRegNum()); //사업자등록번호
+			psmt.setString(6, dto.getComRegNum()); //통신판매신고번호
+			psmt.setString(7, dto.getTel());
+			psmt.setString(8, dto.getFax());
+			psmt.setString(9, dto.getEmail());
+			psmt.setString(10, dto.getZip());
+			psmt.setString(11, dto.getAddr1());
+			psmt.setString(12, dto.getAddr2());
+			psmt.setString(13, dto.getManager()); //담당자 이름
+			psmt.setString(14, dto.getManagerHp()); //담당자 휴대폰 번호
+			psmt.setString(15, dto.getRegip());
+			
+			psmt.executeUpdate(); //쿼리문 실행
+
+			close();
+			
+			logger.info("MemberDAO insertMemberSeller...2");
+		} catch (Exception e) {
+			logger.error("MemberDAO insertMemberSeller error : " + e.getMessage());
+		}
+	}
+	
+	//로그인
 	public MemberDTO selectMember(String uid, String pass) {
 		
 		MemberDTO dto = null;
@@ -73,7 +109,91 @@ public class MemberDAO extends DBHelper{
 			logger.error("MemberDAO selectMember error : " + e.getMessage());
 		}
 		
-		return null;
+		return dto;
+	}
+	
+	//아이디 중복 검사
+	public int selectCountUid(String uid) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("MemberDAO selectCountUid...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_UID);
+			psmt.setString(1, uid);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+			logger.info("MemberDAO selectCountUid...2");
+
+		} catch (Exception e) {
+			logger.error("MemberDAO selectCountUid error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	//이메일 중복 검사
+	public int selectCountEmail(String email) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("MemberDAO selectCountEmail...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_EMAIL);
+			psmt.setString(1, email);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+			logger.info("MemberDAO selectCountEmail...2");
+
+		} catch (Exception e) {
+			logger.error("MemberDAO selectCountEmail error : " + e.getMessage());
+		}
+		
+		return result;
+	}
+	
+	//휴대폰번호 중복 검사
+	public int selectCountHp(String hp) {
+		
+		int result = 0;
+		
+		try {
+			logger.info("MemberDAO selectCountHp...1");
+			
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COUNT_HP);
+			psmt.setString(1, hp);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+			close();
+			
+			logger.info("MemberDAO selectCountHp...2");
+
+		} catch (Exception e) {
+			logger.error("MemberDAO selectCountHp error : " + e.getMessage());
+		}
+		
+		return result;
 	}
 	
 	public void selectMembers() {}
