@@ -32,7 +32,7 @@ public class LogoutController extends HttpServlet {
 		session.invalidate();
 		
 		//로그아웃 후 메인페이지로 이동
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/Kmarket/");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/Kmarket/member/login.do?success=200");
 		dispatcher.forward(req, resp);
 	}
 }

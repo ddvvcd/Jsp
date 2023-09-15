@@ -7,7 +7,7 @@ public class MemberDTO {
 	private int gender;
 	private String hp;
 	private String email;
-	private int type; //구분
+	private int type; //1, 2로 구분 (1:구매 회원/2:판매 회원)
 	private int point; //포인트
 	private int level; //등급
 	private String zip;

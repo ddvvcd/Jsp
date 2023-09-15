@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +9,7 @@
   <link rel="stylesheet" href="../css/common.css">
   <link rel="stylesheet" href="../css/member.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
 
   </style>
@@ -21,13 +21,18 @@
       <div class="top">
         <div>
         <c:if test="${empty  sessUser}">
-          <a href="/Kmarket/member/login.do">로그인</a>
-          <a href="/Kmarket/member/register.do">회원가입</a>
+        	<a href="/Kmarket/member/login.do">로그인</a>
+          	<a href="/Kmarket/member/register.do">회원가입</a>
+          	<a href="#">마이페이지</a>
+          	<a href="/Kmarket/product/">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;장바구니
+            <span class="material-symbols-outlined"></span>
        	</c:if>
        	<c:if test="${not empty  sessUser}">
-       	  <a href="/Kmarket/member/logout.do">로그아웃</a>
-          <a href="#">마이페이지</a>
-          <a href="#">
+       		<a href="/Kmarket/member/logout.do">로그아웃</a>
+          	<a href="/Kmarket/member/register.do">회원가입</a>
+            <a href="#">마이페이지</a>
+            <a href="/Kmarket/product/">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;장바구니
             <span class="material-symbols-outlined"></span>
           </a>
@@ -36,7 +41,7 @@
       </div>
       <div class="logo">
         <div>
-          <a href="">
+          <a href="/Kmarket/main/index.do">
             <img src="../image/header_logo.png" alt="헤더 로고" />
           </a>
         </div>

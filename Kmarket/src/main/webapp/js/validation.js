@@ -16,3 +16,13 @@ let reName  = /^[가-힣]{2,10}$/
 let reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
 let reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 let reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+
+$(document).ready(function(){
+	//아이디 검사 (회원가입 후 isUidOk = true가 되므로 다시 설정/취약점 대응)
+	$('#km_uid').keydown(function(){
+		$('.msgId').text('');
+		isUidOk = false;
+	});
+});
+   			
+   			

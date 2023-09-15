@@ -1,28 +1,66 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Kmarket/js/zipCode.js"></script>
+<script src="/Kmarket/js/validation.js"></script>
 <script>
-
-$('#km_uid').click(function(){
+$(document).ready(function(){
 	
-	const uid = $('input[name=km_uid]').val();
+	$('#km_uid').blur(function() {
+		
+		  const uid = $(this).val();
+		  
+		  $.ajax({
+		    url: '/Kmarket/member/checkUid.do?uid=' + uid,
+		    type: 'get',
+		    dataType: 'json',
+		    success: function(data) {
+		      if (data.result > 0) {
+		        $('.msgId').css('color', 'red').text('이미 사용중인 아이디입니다.');
+		      } else {
+		        $('.msgId').css('color', 'green').text('사용 가능한 아이디입니다.');
+		      }
+		    }
+		  });
+	});// km_uid end
 	
-	$.ajax({
-		url:'/Kmarket/member/checkUid.do?uid='+uid,
-		type:'get',
-		dataType:'json',
-		success: function(data){
-			
-			if(data.result > 0){
-				$('.msgId').css('color', 'red').text('이미 사용중인 별명입니다.');
-			}else{
-				$('.msgId').css('color', 'green').text('사용 가능한 별명입니다.');
-			}
-			
-		}
-	});
+	$('#km_email').blur(function(){
+		
+		const email = $(this).val();
+		
+		$.ajax({
+			url: '/Kmarket/member/checkEmail.do?email=' + email,
+			type: 'get',
+			dataType: 'json',
+			success: function(data){
+			      if (data.result > 0) {
+				        $('.msgEmail').css('color', 'red').text('이미 사용중인 이메일입니다.');
+				      } else {
+				        $('.msgEmail').css('color', 'green').text('사용 가능한 이메일입니다.');
+				      }
+				    }
+		  });
+	});//km_email end
 	
+	$('#km_hp').blur(function(){
+		
+		const hp = $(this).val();
+		
+		$.ajax({
+			url: '/Kmarket/member/checkHp.do?hp=' + hp,
+			type: 'get',
+			dataType: 'json',
+			success: function(data){
+			      if (data.result > 0) {
+				        $('.msgHp').css('color', 'red').text('이미 사용중인 휴대폰 번호입니다.');
+				      } else {
+				        $('.msgHp').css('color', 'green').text('사용 가능한 휴대폰 번호입니다.');
+				      }
+				    }
+		  });
+	});//km_hp end
 	
-});//km_uid end ('이미 사용중인 별명입니다.'만 뜸/점검 중)
+}); //document.ready end
 
 </script>
 <main id="member">
@@ -39,7 +77,7 @@ $('#km_uid').click(function(){
             <tr>
               <th><span class="essential">*</span>아이디</th>
               <td>
-                <input type="text" name="km_uid" id="km_uid"placeholder="아이디를 입력" required />
+                <input type="text" name="km_uid" id="km_uid" placeholder="아이디를 입력" required />
                 <span class="msgId" id="msgId">영문, 숫자로 4~12자까지 설정해 주세요.</span>
               </td>
             </tr>
@@ -47,7 +85,7 @@ $('#km_uid').click(function(){
               <th><span class="essential">*</span>비밀번호</th>
               <td>
                 <input type="password" name="km_pass1" placeholder="비밀번호를 입력" required />
-                <span class="msgId">영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해
+                <span class="msgPass1">영문, 숫자, 특수문자를 조합하여 8~12자까지 설정해
                   주세요.</span>
               </td>
             </tr>
@@ -55,7 +93,7 @@ $('#km_uid').click(function(){
               <th><span class="essential">*</span>비밀번호확인</th>
               <td>
                 <input type="password" name="km_pass2" placeholder="비밀번호를 입력" required />
-                <span class="msgId">비밀번호 재입력</span>
+                <span class="msgPass2">비밀번호 재입력</span>
               </td>
             </tr>
           </tbody>
@@ -87,13 +125,14 @@ $('#km_uid').click(function(){
             <tr>
               <th><span class="essential">*</span>EMAIL</th>
               <td>
-                <input type="email" name="km_email" placeholder="이메일 입력" required />
+                <input type="email" name="km_email" id="km_email" placeholder="이메일 입력" required />
+				<span class="msgEmail"></span>
               </td>
             </tr>
             <tr>
               <th><span class="essential">*</span>휴대폰</th>
               <td>
-                <input type="text" name="km_hp" maxlength="13" placeholder="휴대폰번호 입력" required />
+                <input type="text" name="km_hp" maxlength="13" id="km_hp" placeholder="휴대폰번호 입력" required />
                 <span class="msgHp"> - 포함 13자리를 입력하세요.</span>
               </td>
             </tr>
@@ -102,6 +141,7 @@ $('#km_uid').click(function(){
               <td>
                 <div>
                   <input type="text" name="km_zip" id="zip" placeholder="우편번호 입력 클릭"/>
+                  <button type="button" onclick="zipcode()">우편번호 입력</button>
                 </div>
                 <div>
                   <input type="text" name="km_addr1" id="addr1" size="50" placeholder="주소를 검색하세요."/>

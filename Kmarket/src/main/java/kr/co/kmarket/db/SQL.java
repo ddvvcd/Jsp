@@ -4,17 +4,18 @@ public class SQL {
 	
 	//Signup
 	//약관 넣기
-	public static final String SELECT_TERMS = "SELECT * FROM `Terms`";
+	public static final String SELECT_TERMS = "SELECT * FROM `km_member_terms`";
 	
 	//Member
 	//회원가입 (일반회원)
-	public static final String INSERT_MEMBER = "INSERT INTO `Member` SET "
+	public static final String INSERT_MEMBER = "INSERT INTO `km_member` SET "
 											 + "uid=?,"
 											 + "pass=SHA2(?, 256),"
 											 + "name=?,"
 											 + "gender=?,"
 											 + "hp=?,"
 											 + "email=?,"
+											 + "type=?,"
 											 + "zip=?,"
 											 + "addr1=?,"
 											 + "addr2=?,"
@@ -22,7 +23,7 @@ public class SQL {
 											 + "rdate=NOW()";
 	
 	//회원가입 (판매회원)
-	public static final String INSERT_MEMBER_SELLER = "INSERT INTO `Member` SET "
+	public static final String INSERT_MEMBER_SELLER = "INSERT INTO `km_member` SET "
 													 + "uid=?,"
 													 + "pass=SHA2(?, 256),"
 													 + "company=?,"
@@ -41,12 +42,12 @@ public class SQL {
 													 + "rdate=NOW()";
 
 	
-	public static final String SELECT_MEMBER = "SELECT * FROM `Member` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
+	public static final String SELECT_MEMBER = "SELECT * FROM `km_member` WHERE `uid`=? AND `pass`=SHA2(?, 256)";
 
 	//아이디 중복 확인
-	public static final String SELECT_COUNT_UID = "SELECT COUNT(*) FROM `Member` WHERE `uid`=?";
+	public static final String SELECT_COUNT_UID = "SELECT COUNT(*) FROM `km_member` WHERE `uid`=?";
 	//이메일 중복 확인
-	public static final String SELECT_COUNT_EMAIL = "SELECT COUNT(*) FROM `Member` WHERE `email`=?";
+	public static final String SELECT_COUNT_EMAIL = "SELECT COUNT(*) FROM `km_member` WHERE `email`=?";
 	//휴대폰번호 중복 확인
-	public static final String SELECT_COUNT_HP = "SELECT COUNT(*) FROM `Member` WHERE `hp`=?";
+	public static final String SELECT_COUNT_HP = "SELECT COUNT(*) FROM `km_member` WHERE `hp`=?";
 }

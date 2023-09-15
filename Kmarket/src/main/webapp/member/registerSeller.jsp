@@ -1,5 +1,66 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/Kmarket/js/zipCode.js"></script>
+<script>
+$(document).ready(function(){
+	
+	$('#seller_uid').blur(function() {
+		
+		  const uid = $(this).val();
+		  
+		  $.ajax({
+		    url: '/Kmarket/member/checkUid.do?uid=' + uid,
+		    type: 'get',
+		    dataType: 'json',
+		    success: function(data) {
+		      if (data.result > 0) {
+		        $('.msgId').css('color', 'red').text('이미 사용중인 아이디입니다.');
+		      } else {
+		        $('.msgId').css('color', 'green').text('사용 가능한 아이디입니다.');
+		      }
+		    }
+		  });
+	});// seller_uid end
+	
+	$('#seller_email').blur(function(){
+		
+		const email = $(this).val();
+		
+		$.ajax({
+			url: '/Kmarket/member/checkEmail.do?email=' + email,
+			type: 'get',
+			dataType: 'json',
+			success: function(data){
+			      if (data.result > 0) {
+				        $('.msgEmail').css('color', 'red').text('이미 사용중인 이메일입니다.');
+				      } else {
+				        $('.msgEmail').css('color', 'green').text('사용 가능한 이메일입니다.');
+				      }
+				    }
+		  });
+	});//seller_email end
+	
+	$('#seller_managerHp').blur(function(){
+		
+		const hp = $(this).val();
+		
+		$.ajax({
+			url: '/Kmarket/member/checkHp.do?hp=' + hp,
+			type: 'get',
+			dataType: 'json',
+			success: function(data){
+			      if (data.result > 0) {
+				        $('.msgHp').css('color', 'red').text('이미 사용중인 휴대폰 번호입니다.');
+				      } else {
+				        $('.msgHp').css('color', 'green').text('사용 가능한 휴대폰 번호입니다.');
+				      }
+				    }
+		  });
+	});//seller_managerHp end
+	
+}); //document.ready end
+</script>
 <main id="member">
   <div class="registerSeller">
     <nav>
@@ -16,7 +77,7 @@
             <tr>
               <th><span class="essential">*</span>아이디</th>
               <td>
-                <input type="text" name="seller_uid" placeholder="아이디를 입력" required />
+                <input type="text" name="seller_uid" id="seller_uid" placeholder="아이디를 입력" required />
                 <span class="msgId">&nbsp;&nbsp;영문, 숫자로 4~12자까지 설정해 주세요.</span>
               </td>
             </tr>
@@ -104,7 +165,8 @@
                 <span class="essential">*</span>EMAIL
               </th>
               <td>
-                <input type="email" name="seller_email" placeholder="이메일 입력" required>
+                <input type="email" name="seller_email" id="seller_email" placeholder="이메일 입력" required>
+                <span class="msgEmail"></span>
               </td>
             </tr>
             <tr class="addr">
@@ -112,6 +174,7 @@
               <td>
                 <div>
                   <input type="text" name="seller_zip" id="zip" placeholder="우편번호 입력 클릭" readonly>
+                  <button type="button" onclick="zipcode()">우편번호 입력</button>
                 </div>
                 <div>
                   <input type="text" name="seller_addr1" id="addr1" size="50" placeholder="주소를 검색하세요." readonly>
@@ -141,7 +204,7 @@
             <tr>
               <th><span class="essential">*</span>휴대폰</th>
               <td>
-                <input type="text" name="seller_managerHp" maxlength="13" placeholder="휴대폰번호 입력" required>
+                <input type="text" name="seller_managerHp" id="seller_managerHp" maxlength="13" placeholder="휴대폰번호 입력" required>
                 <span class="msgHp">&nbsp;&nbsp;- 포함 13자리를 입력하세요.</span>
               </td>
             </tr>

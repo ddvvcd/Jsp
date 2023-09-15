@@ -27,7 +27,7 @@ public class CheckHpController extends HttpServlet{
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String hp = req.getParameter("km_hp");
+		String hp = req.getParameter("hp");
 		
 		int result = service.selectCountHp(hp);
 		

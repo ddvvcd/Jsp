@@ -26,10 +26,11 @@ public class MemberDAO extends DBHelper{
 			psmt.setInt(4, dto.getGender());
 			psmt.setString(5, dto.getHp());
 			psmt.setString(6, dto.getEmail());
-			psmt.setString(7, dto.getZip());
-			psmt.setString(8, dto.getAddr1());
-			psmt.setString(9, dto.getAddr2());
-			psmt.setString(10, dto.getRegip());
+			psmt.setInt(7, dto.getType());
+			psmt.setString(8, dto.getZip());
+			psmt.setString(9, dto.getAddr1());
+			psmt.setString(10, dto.getAddr2());
+			psmt.setString(11, dto.getRegip());
 			psmt.executeUpdate(); //쿼리문 실행
 			close();
 			

@@ -21,7 +21,7 @@ public class DBHelper {
 		
 	    try {
 			Context ctx = (Context) new InitialContext().lookup("java:comp/env");
-			DataSource ds = (DataSource) ctx.lookup("jdbc/Kmarket");
+			DataSource ds = (DataSource) ctx.lookup("jdbc/kMarket");
 
 	        conn = ds.getConnection();
 	    } catch (Exception e) {

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.co.kmarket.dto.MemberDTO;
 import kr.co.kmarket.service.MemberService;
 
 @WebServlet("/member/join.do")
@@ -25,8 +26,16 @@ public class JoinController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/member/join.jsp");
-			dispatcher.forward(req, resp);
-
+		String type = req.getParameter("type");
+		
+		if ("normal".equals(type)) {
+		    // 개인 구매회원 약관 페이지로 리디렉션
+		    resp.sendRedirect("/Kmarket/member/signup.jsp");
+		} else if ("seller".equals(type)) {
+		    // 판매회원 약관 페이지로 리디렉션
+		    resp.sendRedirect("/Kmarket/member/signup.jsp");
+		}
+		
+		req.getRequestDispatcher("/member/join.jsp").forward(req, resp);
 	}
 }
