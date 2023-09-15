@@ -22,7 +22,8 @@ $('#km_uid').click(function(){
 	});
 	
 	
-});//btnCheckNick end
+});//km_uid end ('이미 사용중인 별명입니다.'만 뜸/점검 중)
+
 </script>
 <main id="member">
   <div class="register">
